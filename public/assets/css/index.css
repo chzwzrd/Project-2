@@ -1,0 +1,55 @@
+body {
+    background: #3f1097;
+}
+
+#login-form {
+    position: relative;
+    /* border: 5px solid rgba(0,0,0,.26); */
+    border-radius: 10px;
+    background: white;
+    box-shadow: 2px 2px 2px 0px grey;
+    width: 300px;
+    height: 380px;
+    margin: 140px auto;
+    padding: 10px 40px;
+}
+
+#logo {
+    width: 70px;
+    margin: 20px auto -20px;
+    display: block;
+}
+
+h4 {
+    font-family: 'Sigmar One';
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: normal;
+}
+
+#submit {
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    background: rgb(3, 244, 212);
+}
+
+#submit:hover {
+    background: rgb(0, 228, 197);
+}
+
+#create {
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+    text-decoration: underline;
+    color: rgb(3, 169, 244);
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+#create:hover {
+    color: rgb(30, 154, 196)
+}
