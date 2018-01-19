@@ -1,12 +1,41 @@
 <!DOCTYPE html>
 <html lang="en-US">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PetRent</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/index.css">
 </head>
+
 <body>
 
+    <div class="container">
+        <div class="mdl-grid">
+            <div id="login-form" class="mdl-cell mdl-cell--6-col">
+                <img src="/assets/img/puppy-logo.png" alt="puppy-logo" id="logo" />
+                <h4 class="text-center">PetRent</h4>
+                <form action="">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="Username">
+                        <label class="mdl-textfield__label" for="Username">Username:</label>
+                    </div>
+                    <br />
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="Password">
+                        <label class="mdl-textfield__label" for="sample3">Password:</label>
+                    </div>
+                    <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        Login
+                    </button>
+                </form>
+                <a href="#" id="create">New user?</a>
+            </div>
+        </div>
+    </div>
 
-    
 </body>
+
 </html>
