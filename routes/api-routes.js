@@ -13,35 +13,31 @@ var models = require("../models");
  // GET route for getting all user
  app.get("/api/user/", function(req, res) {
    models.UserInfo.findAll({})
-    .then(function(modelsUserInfo) {
-      res.json(modelsUserInfo);
-    });
-  });
-
-  // Get route for returning UserInfo
-  app.get("/api/UserInfo/category/:category", function(req, res) {
-   models.UserInfo.findAll({
-      Order: {
-        category: req.params.category
-      }
+    .then(function(response) {
+      res.json(response);
     })
-    .then(function(modelsUserInfo) {
-      res.json(modelsUserInfo);
+    .catch(function(err){
+      console.log(err);
+      res.send(err);
+    
     });
   });
 
-  // Get rotue for retrieving a single UserInfo
+
+ // Get route for retrieving a single UserInfo
   app.get("/api/UserInfo/:id", function(req, res) {
    models.UserInfo.findOne({
       where: {
-        name: req.params.name,
-        email: req.params.email,
-        phone: req.params.phone,
-        zip: req.params.zip,
+        id: req.params.id
       }
     })
-    .then(function(modelsUserInfo) {
-      res.json(modelsUserInfo);
+    .then(function(response) {
+      res.json(response);
+    })
+    .catch(function(err){
+      console.log(err);
+      res.send(err);
+    
     });
   });
 
@@ -55,8 +51,13 @@ var models = require("../models");
       zip: req.body.zip,
     
     })
-    .then(function(modelsUserInfo) {
-      res.json(modelsUserInfo);
+    .then(function(response) {
+      res.json(response);
+    })
+    .catch(function(err){
+      console.log(err);
+      res.send(err);
+    
     });
   });
 
@@ -70,8 +71,13 @@ var models = require("../models");
      zip: req.params.zip,
       }
     })
-    .then(function(modelsUserInfo) {
-      res.json(modelsUserInfo);
+    .then(function(response) {
+      res.json(response);
+    })
+    .catch(function(err){
+      console.log(err);
+      res.send(err);
+    
     });
   });
 
@@ -87,8 +93,13 @@ var models = require("../models");
           location: req.body.location,
         }
       })
-    .then(function(modelsUserInfo) {
+    .then(function(response) {
       res.json(UserInfo);
+    })
+    .catch(function(err){
+      console.log(err);
+      res.send(err);
+    
     });
   });
   
