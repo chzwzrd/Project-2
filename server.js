@@ -34,13 +34,10 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Routes // 
-/****************************   
-*                           *
-*   require("./")(app);     *
-*                           *
-*****************************/
 
+// Routes // 
+var htmlRoutes = require("./routes/html-routes.js");
+app.use("/",routes);
 
 // Sync sequelize models and start Express app //
 
