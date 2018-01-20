@@ -15,11 +15,20 @@ var sequelize = require("../config/connection.js");
 // ___ START of RentHistory model   __________________________________________________________________________________________________________________________
 module.exports = function (sequelize, DataTypes) {
     // Defining our User table
-    var RentHistory = sequelize.define("User", {
+    var RentHistory = sequelize.define("UserHistory", {
         OrderID: {
             type: Sequelize.INTEGER
         },
-        Date: {
+        PetName: {
+            type: Sequelize.STRING
+        },
+        Gender: {
+            type: Sequelize.STRING
+        },
+        DATE: {
+            type: Sequelize.INTEGER
+        },
+        Location: {
             type: Sequelize.STRING
         }
     });
@@ -28,11 +37,11 @@ module.exports = function (sequelize, DataTypes) {
 
         // Setting a many to one relationship 
         RentHistory.belongsToMany(models.User, {
-            
+
         });
         //
     };
-
+    
     return RentHistory;
 };
 
