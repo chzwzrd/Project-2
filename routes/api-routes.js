@@ -13,8 +13,8 @@ var models = require("../models");
  // GET route for getting all user
  app.get("/api/user/", function(req, res) {
    models.UserInfo.findAll({})
-    .then(function(dbUserInfo) {
-      res.json(dbUserInfo);
+    .then(function(modelsUserInfo) {
+      res.json(modelsUserInfo);
     });
   });
 
@@ -25,8 +25,8 @@ var models = require("../models");
         category: req.params.category
       }
     })
-    .then(function(dbUserInfo) {
-      res.json(dbUserInfo);
+    .then(function(modelsUserInfo) {
+      res.json(modelsUserInfo);
     });
   });
 
@@ -40,8 +40,8 @@ var models = require("../models");
         zip: req.params.zip,
       }
     })
-    .then(function(dbUserInfo) {
-      res.json(dbUserInfo);
+    .then(function(modelsUserInfo) {
+      res.json(modelsUserInfo);
     });
   });
 
@@ -55,8 +55,8 @@ var models = require("../models");
       zip: req.body.zip,
     
     })
-    .then(function(dbUserInfo) {
-      res.json(dbUserInfo);
+    .then(function(modelsUserInfo) {
+      res.json(modelsUserInfo);
     });
   });
 
@@ -70,8 +70,8 @@ var models = require("../models");
      zip: req.params.zip,
       }
     })
-    .then(function(dbUserInfo) {
-      res.json(dbUserInfo);
+    .then(function(modelsUserInfo) {
+      res.json(modelsUserInfo);
     });
   });
 
@@ -80,15 +80,15 @@ var models = require("../models");
    models.UserInfo.update(req.body,
       {
         where: {
-        OrderID:: req.body.OrderID,
+        OrderID: req.body.OrderID,
           petname: req.body.petname,
           gender: req.body.gender,
           date: req.body.date,
           location: req.body.location,
         }
       })
-    .then(function(dbUserInfo) {
-      res.json(dbUserInfo);
+    .then(function(modelsUserInfo) {
+      res.json(UserInfo);
     });
   });
 };
