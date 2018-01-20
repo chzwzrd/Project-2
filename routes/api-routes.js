@@ -17,7 +17,7 @@ var models = require("../models");
       res.json(dbuser);
     });
   });
-
+ 
   // Get route for returning user
   app.get("/api/user/category/:category", function(req, res) {
     db.user.findAll({
