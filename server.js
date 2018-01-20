@@ -1,4 +1,3 @@
-
 // Require dependencies // 
 
 var express = require("express");
@@ -14,6 +13,10 @@ var models = require("./models");
 
 var app = express();
 var PORT = process.env.PORT || 8080;
+
+// Handlebars routes for pet search controller
+var hbsRoutes = require("./controllers/hbs_controller");
+app.use("/", hbsRoutes);
 
 // Data parsing for Express app //
 
@@ -41,9 +44,7 @@ app.set("view engine", "handlebars");
 // Sync sequelize models and start Express app //
 
 models.sequelize.sync({ force: true }).then(function() {
-    app.listen(PORT, function() {
-      console.log("App listening on PORT " + PORT);
-    });
+  app.listen(PORT, function() {
+    console.log("App listening on PORT " + PORT);
   });
-  
-
+});
