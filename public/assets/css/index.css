@@ -29,14 +29,14 @@ label {
     font-weight: normal;
 }
 
-#submit {
+#sign-in {
     position: absolute;
     left: 40px;
     bottom: 40px;
     background: rgb(3, 244, 212);
 }
 
-#submit:hover {
+#sign-in:hover {
     background: rgb(0, 228, 197);
 }
 
