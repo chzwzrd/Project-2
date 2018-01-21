@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 // // Going to need models for:
 
 // // 1. User (POST)
 // // 2. Dogs (GET)
 // // 3. RentHistory (FOREIGN KEYS: User and Dog) 
+=======
+// Going to need models for:
+
+// 1. User (POST)
+// 2. Dogs (GET)
+// 3. RentHistory (FOREIGN KEYS: User and Dog) 
+>>>>>>> bed013f3f072bb4f74a0fda9b27c33d44cbd3e41
 // //    use handlebars for this, axios here, res.render, save to an
 
 // // db stuff in api files
