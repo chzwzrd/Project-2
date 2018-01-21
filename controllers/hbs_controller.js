@@ -1,22 +1,22 @@
-// Does this stuff go in routes/diffs 
-var models = require("../models"); 
-var router = express.Router();
+// // Does this stuff go in routes/diffs 
+// var models = require("../models"); 
+// var router = express.Router();
 
-router.get("/", function(req, res) {
-        models.book.findAll()
-            .then(function(response) {
-                res.render("index", {
-                    data: response,
-                    string: "wait this worked for real??? LOL"
-                })
-            })
-            .catch(function(err) {
-                console.log(err)
-                res.send(err);
-            });
-    })
-    // Export routes for server.js to use.
-module.exports = router;
+// router.get("/", function(req, res) {
+//         models.book.findAll()
+//             .then(function(response) {
+//                 res.render("index", {
+//                     data: response,
+//                     string: "wait this worked for real??? LOL"
+//                 })
+//             })
+//             .catch(function(err) {
+//                 console.log(err)
+//                 res.send(err);
+//             });
+//     })
+//     // Export routes for server.js to use.
+// module.exports = router;
 
 //________________HBS Controller from Sammy and John____________
 
