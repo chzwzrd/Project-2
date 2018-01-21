@@ -11,13 +11,17 @@ body {
     height: 70px;
 }
 
+#sign-out {
+    font-weight: bold;
+}
+
 #form {
     position: relative;
     /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
     background: white;
     box-shadow: 2px 2px 2px 0px grey;
-    margin: 140px auto 0;
+    margin: 120px auto 0;
     padding: 10px 40px 80px;
 }
 
@@ -53,14 +57,14 @@ label {
     font-weight: normal;
 }
 
-#submit {
+#search {
     position: absolute;
     right: 68px;
     bottom: 40px;
     background: rgb(3, 244, 212);
 }
 
-#submit:hover {
+#search:hover {
     background: rgb(0, 228, 197);
 }
 

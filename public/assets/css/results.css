@@ -2,41 +2,69 @@ body {
     background: #3f1097;
 }
 
-#login-form {
+.mdl-layout__header {
+    background: rgb(3, 244, 212);
+    box-shadow: 0 2px 1px 1px black;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 70px;
+}
+
+#sign-out {
+    font-weight: bold;
+}
+
+#form {
     position: relative;
     /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
     background: white;
     box-shadow: 2px 2px 2px 0px grey;
-    width: 300px;
-    height: 380px;
-    margin: 140px auto;
-    padding: 10px 40px;
+    margin: 120px auto 0;
+    padding: 10px 40px 80px;
 }
 
 #logo {
-    width: 70px;
-    margin: 20px auto -20px;
-    display: block;
+    width: 50px;
 }
 
+.mdl-layout-title {
+    margin-top: 15px;
+    margin-left: -20px;
+}
+
+.mdl-layout-title a:hover {
+    text-decoration: none;
+}
+
+.mdl-layout-title,
 h4 {
     font-family: 'Sigmar One';
     margin-bottom: 10px;
+}
+
+.mdl-textfield {
+    margin-right: 12px;
+}
+
+#new-user-form {
+    width: 100%;
+    padding: 10px;
 }
 
 label {
     font-weight: normal;
 }
 
-#sign-in {
+#submit {
     position: absolute;
-    left: 40px;
+    right: 68px;
     bottom: 40px;
     background: rgb(3, 244, 212);
 }
 
-#sign-in:hover {
+#submit:hover {
     background: rgb(0, 228, 197);
 }
 
