@@ -13,7 +13,7 @@
 // var sequelize = require("../config/connection.js");
 
 // ___ START of UserInfo model   __________________________________________________________________________________________________________________________
-module.exports = function (sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
     // Defining our UserInfo table
     var UserInfo = sequelize.define("UserInfo", {
         name: {
