@@ -16,9 +16,14 @@ var app = express();
 var PORT = process.env.PORT || 8080;
 
 // Handlebars routes for pet search controller
+<<<<<<< HEAD
 // John added .js to hbs_controller in below route
 var hbsRoutes = require("./controllers/hbs_controller.js");
 app.use("/", hbsRoutes);
+=======
+// var hbsRoutes = require("./controllers/hbs_controller");
+// app.use("/", hbsRoutes);
+>>>>>>> 2375a0424a9390923d0f84f56d5a1cc9401745f0
 
 // Data parsing for Express app //
 
@@ -37,8 +42,13 @@ app.set("view engine", "handlebars");
 
 
 // Routes // 
+<<<<<<< HEAD
 var htmlRoutes = require("./routes/html-routes.js");
 app.use("/", "routes");
+=======
+// var htmlRoutes = require("./routes/html-routes.js");
+// app.use("/", htmlRoutes);
+>>>>>>> 2375a0424a9390923d0f84f56d5a1cc9401745f0
 
 // Sync sequelize models and start Express app //
 
