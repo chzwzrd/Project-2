@@ -9,8 +9,8 @@ router.get("/", function(req, res) {
     models.UserInfo.findAll()
         .then(function(response) {
             res.render("index", {
-                data: res
-            })
+                data: response
+            });
         })
         .catch(function(err) {
             console.log(err)

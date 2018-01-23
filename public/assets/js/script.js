@@ -19,12 +19,12 @@ $(document).ready(() => {
 
     $('#sign-in').on('click', (e) => {
         e.preventDefault();
-        location.assign('./search.html');
+        location.assign('/search');
     });
 
     $('#sign-out').on('click', (e) => {
         e.preventDefault();
-        location.assign('./index2.html');
+        location.assign('/');
     });
 
     $('#search').on('click', (e) => {
@@ -52,21 +52,18 @@ $(document).ready(() => {
                 sex: $('#pet-sex').val(), // must be either 'M' or 'F' (capitalized)
                 zipCode: $('#zip-code').val().trim() // must be a string, don't convert it into an integer
             };
+            // userSearch = {
+            //     animal: 'dog',
+            //     breed: 'Shiba Inu',
+            //     age: 'Baby',
+            //     sex: 'F',
+            //     zipCode: '92705'
+            // };
 
             var petFinderURL = 'http://api.petfinder.com/pet.find?key=19d36f366ea3a2b37ba86aaeb7a5bbea&format=json';
-            // axios.get(petFinderURL + '&animal=' + userSearch.animal + '&breed=' + userSearch.breed + '&age=' + userSearch.age + '&sex=' + userSearch.sex + '&location=' + userSearch.zipCode + '&format=json&count=1')
-            // .then(response => {
-            //     console.log(response);
-            // })
-            // .catch(err => {
-            //     console.error(err);
-            // });
 
-            // WORKING!!!!
-            $.get(`${petFinderURL}&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`)
-                .done(function(data) {
-                    // location.assign('./results.html');
-
+            axios.get(`${petFinderURL}&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`)
+                .then(response => {
                     console.log("==================================");
                     console.log("=========== USER SEARCH ==========");
                     console.log("==================================");
@@ -75,9 +72,14 @@ $(document).ready(() => {
                     console.log("\n==================================");
                     console.log("========== API RESPONSE ==========");
                     console.log("==================================");
-                    console.log(data);
+                    if (response.data.petfinder.hasOwnProperty('pets')) {
+                        console.log('REQUEST SUCCESSFUL');
+                    } else {
+                        console.log('REQUEST UNSUCCESSFUL');
+                    }
+                    console.log(response.data);
 
-                    var pets = data.petfinder.pets.pet;
+                    var pets = response.data.petfinder.pets.pet;
 
                     // how many pets found
                     console.log("\n==================================");
@@ -103,6 +105,8 @@ $(document).ready(() => {
                             state: pets[i].contact.state.$t,
                             zip: pets[i].contact.zip.$t
                         }
+                        var location = contact.city + ", " + contact.state;
+                        var description = pets[i].description.$t;
                         var media = pets[i].media;
                         var photosArray = [];
                         var options = pets[i].options;
@@ -129,9 +133,13 @@ $(document).ready(() => {
                         console.log('NAME: ' + name);
 
                         // list all breeds
-                        if (breeds.breed.length > 0) {
-                            for (var j = 0; j < breeds.breed.length; j++) {
-                                breedsArray.push(breeds.breed[j].$t);
+                        if (isEmptyObj(breeds) === false) {
+                            if (breeds.breed.length > 1) {
+                                for (var j = 0; j < breeds.breed.length; j++) {
+                                    breedsArray.push(breeds.breed[j].$t);
+                                }
+                            } else {
+                                breedsArray.push(breeds.breed.$t);
                             }
                             console.log('BREEDS: ' + breedsArray.join(', '));
                         } else {
@@ -143,7 +151,7 @@ $(document).ready(() => {
                         // sex
                         console.log('SEX: ' + sex);
                         // city, state located
-                        console.log('LOCATION: ' + contact.city + ', ' + contact.state);
+                        console.log('LOCATION: ' + location);
 
                         // list all photo URLs
                         if (isEmptyObj(media) === false) {
@@ -155,7 +163,7 @@ $(document).ready(() => {
                                     num++;
                                 }
                             }
-                            console.log(photosArray.length + ' PHOTOS: \n' + photosArray.join(''));
+                            console.log(photosArray.length + ' PHOTOS: \n' + photosArray.join('\n'));
                         } else {
                             console.log('PHOTOS: N/A');
                         }
@@ -169,27 +177,18 @@ $(document).ready(() => {
                         } else {
                             console.log('OPTIONS: N/A');
                         }
+
+                        // description
+                        if (description !== undefined) {
+                            console.log('DESCRIPTION: \n' + description);
+                        } else {
+                            console.log('DESCRIPTION: N/A');
+                        }
                     }
-                }).fail(function() {
-                    console.error("error");
+                })
+                .catch(err => {
+                    console.error(err);
                 });
-
-            // $.get(petFinderURL + '&animal=dog&breed=Shiba%20Inu&age=Baby&sex=F&location=92705&output=basic')
-            //     .done(function(data) {
-            //         console.log(data.petfinder.pet);
-            //     }).fail(function() {
-            //         console.error("error");
-            //     });
-
-            // // WORKING
-            // $.get(petFinderURL + '&animal=dog&breed=Shiba%20Inu&age=Baby&sex=F&location=92705')
-            //     .done(function(data) {
-            //         console.log(data.petfinder.pets.pet);
-            //     }).fail(function() {
-            //         console.error("error");
-            //     });
-
-            // console.log('valid zip code: ' + validateZipCode($('#zip-code').val().trim()));
         }
     });
 
