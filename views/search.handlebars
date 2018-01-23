@@ -3,7 +3,7 @@
 
 <head>
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/search.css">
+    <link rel="stylesheet" type="text/css" href="/css/search.css">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title">
                     <a href="#">
-                        <img id="logo" src="../public/assets/img/puppy-logo.png" />
+                        <img id="logo" src="/img/puppy-logo.png" />
                     </a>PetRent</span>
                 <div class="mdl-layout-spacer"></div>
                 <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="sign-out">
@@ -31,10 +31,10 @@
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <label for="pet-type">Pet:</label>
                         <select id="pet-type" class="form-control">
-                            <option>Dog</option>
-                            <option disabled>Cat</option>
-                            <option disabled>Rabbit</option>
-                            <option disabled>Bird</option>
+                            <option value="dog">Dog</option>
+                            <option value="cat" disabled>Cat</option>
+                            <option value="rabbit" disabled>Rabbit</option>
+                            <option value="bird" disabled>Bird</option>
                         </select>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -43,6 +43,7 @@
                             <option>Select</option>
                             <option>Siberian Husky</option>
                             <option>French Bulldog</option>
+                            <option>English Bulldog</option>
                             <option>Shiba Inu</option>
                             <option>Corgi</option>
                         </select>
@@ -51,7 +52,7 @@
                         <label for="pet-age">Age:</label>
                         <select id="pet-age" class="form-control">
                             <option>Select</option>
-                            <option>Puppy</option>
+                            <option>Baby</option>
                             <option>Young</option>
                             <option>Adult</option>
                             <option>Senior</option>
@@ -61,8 +62,8 @@
                         <label for="pet-sex">Sex:</label>
                         <select id="pet-sex" class="form-control">
                             <option>Select</option>
-                            <option>Male</option>
-                            <option>Female</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
                         </select>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -80,9 +81,9 @@
                             <option>Anywhere</option>
                         </select>
                     </div>
-                    
+
                     <!-- On Search we need to run the hbs_controller.js function -->
-                    <button id="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button id="search" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         Search
                     </button>
                 </form>

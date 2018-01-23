@@ -5,6 +5,7 @@ var bodyParser = require("body-parser");
 var methodOverride = require ("method-override");
 var exphbs = require("express-handlebars");
 var sequelize = require("sequelize");
+var path = require('path');
 
 // Requiring "models" for sync //
 
@@ -27,7 +28,7 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 // Static directory //
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, '/public/assets')));
 
 // Handlebars //
 
