@@ -16,8 +16,8 @@ var app = express();
 var PORT = process.env.PORT || 8080;
 
 // Handlebars routes for pet search controller
-// var hbsRoutes = require("./controllers/hbs_controller");
-// app.use("/", hbsRoutes);
+var hbsRoutes = require("./controllers/hbs_controller");
+app.use("/", hbsRoutes);
 
 // Data parsing for Express app //
 
