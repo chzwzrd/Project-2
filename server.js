@@ -11,9 +11,8 @@ var path = require('path');
 var morgan = require('morgan');
 var expjwt = require('express-jwt');
 var jwt = require("jsonwebtoken");
-var authCtrl = require('./controllers/auth/auth_controller');
 var cookieParser = require('cookie-parser');
-var router = express.Router();
+// var authCtrl = require('./controllers/auth/auth_controller');
 
 // Requiring "models" for sync //
 var models = require("./models");
@@ -48,17 +47,10 @@ app.set("view engine", "handlebars");
 
 // Routes
 var hbsRoutes = require('./routes/hbs-routes');
-// var apiRoutes = require('./controllers/api_controller.js');
-var authRoutes = require('./routes/auth-routes'); // our login & register (BEFORE authentication)
-var apiRoutes = require('./routes/api-routes'); // the routes behind our authentication (AFTER authentication)
-// app.use('/', hbsRoutes);
-app.use('/auth', authRoutes); // we want our authentication routes to be non-authenticated...because you can't login if you haven't logged in...we need to have this done in this order
-// make another routes file called 'api-routes.js' // these are our authenticating routes, the ones you have to be logged in to use
-// our middleware will be IN BETWEEN these two routes (the BEFORE authentication and AFTER autentication):
-// var auth = expjwt({ // usually will copy paste this stuff from the documentation
-//   secret: process.env.JWT_SECRET, // has to know what the secret is or else won't be able to work its magic (again, your secret should be in a .env file or else you will be easily hacked)
-//   userProperty: 'payload'
-// });
+var authRoutes = require('./routes/auth-routes');
+
+app.use('/auth', authRoutes);
+
 var cookieAuth = function(req, res, next) {
   console.log("EYYY")
   console.log(req.cookies.token);
@@ -70,10 +62,9 @@ var cookieAuth = function(req, res, next) {
     throw new Error("Not Authenticated")
   }
 }
-app.use(cookieAuth);
-//app.use(auth); // all auth is is middleware; this is saying "any routes we've defined above this line doesn't require authentication/the user to be logged in in order to use...it doesn't make sense that you need to be logged in in order to log in or register; anything below this line does require authentication"; any route defined after this line will require a JWT (json web token) in the heade
 
-// app.use('/api', apiRoutes);
+app.use(cookieAuth);
+
 app.use('/', hbsRoutes);
 
 app.get('/', (req, res) => {
