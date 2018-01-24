@@ -190,20 +190,24 @@ $(window).load(() => {
                 zipCode: $('#zip-code').val().trim() // must be a string, don't convert it into an integer
             };
 
-            // to actually post the user's search inputs as an object to a route that contains all of the search inputs that can be accessed as PARAMETERS!!! (go look in hbs-routes.js)
-            axios.post(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`, userSearch)
-            .then(response => {
-                console.log(response);
-                location.assign(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`);
-            })
-            .catch(err => {
-                console.error(err);
-            });
+            // DON'T EVEN NEED A FRICKIN POST REQUEST...!!!!!! -________-
+            // axios.post(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`, userSearch)
+            //     .then(response => {
+            //         console.log(response);
+            //         location.assign(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`);
+            //     })
+            //     .catch(err => {
+            //         console.error(err);
+            //     });
 
-            // purely for browser console insight:
+            // just use a get request. that's all we need.
+            // to actually "send" the user's search inputs to a server route that contains all of the search inputs, which can be accessed as PARAMETERS!!! (go look in hbs-routes.js)
             var petFinderURL = 'http://api.petfinder.com/pet.find?key=19d36f366ea3a2b37ba86aaeb7a5bbea&format=json';
-            axios.get(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`)
+            axios.get(`${petFinderURL}&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`)
                 .then(response => {
+
+                    window.location.href = `/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`;
+                    
                     console.log("==================================");
                     console.log("=========== USER SEARCH ==========");
                     console.log("==================================");
