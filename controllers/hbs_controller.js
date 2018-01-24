@@ -26,18 +26,34 @@ ctrl.getUser = (req, res) => {
 
 var petFinderURL = `http://api.petfinder.com/pet.get?key=${process.env.PETFINDER_API_KEY}format=json`;
 ctrl.petFinderRequest = (req, res) => {
-    axios.get(`${petFinderURL}&animal=${req.body.animal}&breed=${req.body.breed}&age=${req.body.age}&sex=${req.body.sex}&location=${req.body.zipCode}`)
-        .then(response => {
-            res.render('results', {
-                data: response
-            });
-            console.log('WOOHOOO API REQUEST SUCCESS');
-            console.log(response);
-        })
-        .catch(err => {
-            console.error(err);
-            res.send(err);
+    // axios.get(`${petFinderURL}&animal=${req.body.animal}&breed=${req.body.breed}&age=${req.body.age}&sex=${req.body.sex}&location=${req.body.zipCode}`)
+    //     .then(response => {
+    //         res.render('results', {
+    //             data: response
+    //         });
+    //         console.log('WOOHOOO API REQUEST SUCCESS');
+    //         console.log(response);
+    //     })
+    //     .catch(err => {
+    //         console.error(err);
+    //         res.send(err);
+    //     });
+    petfinder.findPet(req.body.zipCode, {
+        animal: req.body.animal,
+        breed: req.body.breed,
+        age: req.body.age,
+        sex: req.body.sex,
+        count: 3
+    }, (err, response) => {
+        if (err) console.error(err);
+        console.log("\n==============================");
+        console.log('WOOHOOO API REQUEST SUCCESS');
+        console.log(response);
+        console.log("==============================\n");
+        res.render('results', {
+            pets: response
         });
+    });
 };
 
 // EXPORT
