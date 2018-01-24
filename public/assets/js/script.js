@@ -146,7 +146,7 @@ $(window).load(() => {
         } else {
             $("label").css('color', 'rgb(0, 228, 197)');
             console.log('login form validated');
-            console.log('logged in as: ' + loginInfo.email, loginInfo.password);
+            // console.log('logged in as: ' + loginInfo.email, loginInfo.password);
             axios.post("/auth/login", {
                 email: $("#email").val(),
                 password: $("#password").val()

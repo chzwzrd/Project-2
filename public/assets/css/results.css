@@ -15,7 +15,7 @@ body {
     font-weight: bold;
 }
 
-#form {
+#results {
     position: relative;
     /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
@@ -42,42 +42,4 @@ body {
 h4 {
     font-family: 'Sigmar One';
     margin-bottom: 10px;
-}
-
-.mdl-textfield {
-    margin-right: 12px;
-}
-
-#new-user-form {
-    width: 100%;
-    padding: 10px;
-}
-
-label {
-    font-weight: normal;
-}
-
-#submit {
-    position: absolute;
-    right: 68px;
-    bottom: 40px;
-    background: rgb(3, 244, 212);
-}
-
-#submit:hover {
-    background: rgb(0, 228, 197);
-}
-
-#create {
-    position: absolute;
-    right: 40px;
-    bottom: 40px;
-    text-decoration: underline;
-    color: rgb(3, 169, 244);
-    margin-top: 40px;
-    font-size: 14px;
-}
-
-#create:hover {
-    color: rgb(30, 154, 196)
 }
