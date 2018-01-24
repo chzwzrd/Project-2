@@ -3,35 +3,34 @@
 
 <head>
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
 </head>
 
 <body>
 
     <div class="container">
         <div class="mdl-grid">
-            <div id="sign-in-form" class="mdl-cell mdl-cell--6-col">
+            <div id="form-container" class="mdl-cell mdl-cell--6-col">
                 <img src="/img/puppy-logo.png" alt="puppy-logo" id="logo" />
                 <h4 class="text-center">PetRent</h4>
-                <form action="">
+                <form id="sign-in-form" action="">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="Username">
-                        <label class="mdl-textfield__label" for="Username">Username:</label>
+                        <input class="mdl-textfield__input" type="text" id="email">
+                        <label class="mdl-textfield__label" for="email">Email:</label>
                     </div>
                     <br />
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" type="text" id="Password">
-                        <label class="mdl-textfield__label" for="sample3">Password:</label>
+                        <input class="mdl-textfield__input" type="text" id="password">
+                        <label class="mdl-textfield__label" for="password">Password:</label>
                     </div>
                     <button id="sign-in" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         Sign In
                     </button>
                 </form>
-                <a href="#" id="create">New user?</a>
+                <a href="/" id="create">New user?</a>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>
