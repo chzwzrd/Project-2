@@ -3,7 +3,7 @@
 
 <head>
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/results.css">
+    <link rel="stylesheet" type="text/css" href="/css/results.css">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title">
                     <a href="#">
-                        <img id="logo" src="../assets/img/puppy-logo.png" />
+                        <img id="logo" src="/img/puppy-logo.png" />
                     </a>PetRent</span>
                 <div class="mdl-layout-spacer"></div>
                 <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="sign-out">
@@ -28,6 +28,60 @@
             <div id="form" class="mdl-cell mdl-cell--12-col">
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container"></div>
+            </div>
+
+            {{!-- id = pets[i].id.$t;
+                var name = pets[i].name.$t;
+                var animal = pets[i].animal.$t;
+                var breeds = pets[i].breeds;
+                var breedsArray = [];
+                var age = pets[i].age.$t;
+                var sex = pets[i].sex.$t;
+                var contact = {
+                    email: pets[i].contact.email.$t,
+                    phone: pets[i].contact.phone.$t,
+                    city: pets[i].contact.city.$t,
+                    state: pets[i].contact.state.$t,
+                    zip: pets[i].contact.zip.$t
+                }
+                var location = contact.city + ", " + contact.state;
+                var description = pets[i].description.$t;
+                var media = pets[i].media;
+                var photosArray = [];
+                var options = pets[i].options;
+                var optionsArray = []; --}}
+
+            <div class="results-container">
+                {{#each this.pet}}
+                    <div data-pet-card="pet-card" class="pet-card">
+                        <a data-pet-card="pet-card-link" class="pet-card__link" href="#">
+                            <div data-pet-card="petcard-section" class="petcard__section">
+                                <div data-pet-card="pet-card-img-box" class="pet-card-act__img-box">
+                                    <img src={{this.media.photos.photo[3].$t}} alt="pet-card" class="pet-card__container" />
+                                    <div data-pet-card="pet-card-act-caption" class="pet-card-act__caption" style="display:none;">Act Quickly</div>
+                                    <!---->
+                                </div>
+                                <div data-pet-card="pet-card-content" class="pet-card__content">
+                                    <h4 data-pet-card="pet-card-heading" class="h4__heading h4-bold h4--x-compact pet-card__heading ellipsis pet-card-act__act-heading">{{this.name.$t}}</h4>
+                                    <div data-pet-card="pet-card-details" class="pet-card-act__details">
+                                        <h5 data-pet-card="h5-heading" class="h5__heading h5-light h5--compact f-letter-caps">
+                                            <span data-pet-card="sex" class="pet-card__content--comma">{{this.sex.$t}}</span>
+                                            <span data-pet-card="age" class="pet-card__content--comma">{{this.age.$t}}</span>
+                                            <!---->
+                                            <!---->
+                                        </h5>
+                                        <h5 data-pet-card="h5-light" class="h5__heading h5--compact h5--light ellipsis">
+                                            <span data-pet-card="city" class="pet-card__content--comma">
+                                                {{this.location}}
+                                            </span>
+                                        </h5>
+                                        <h5 data-pet-card="breed-name" class="h5__heading h5--compact h5--light ellipsis" style="display:none;">{{this.breed}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {{/each}}
             </div>
         </div>
     </div>

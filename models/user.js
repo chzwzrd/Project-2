@@ -12,23 +12,67 @@
 // sequelize (lowercase) references my connection to the DB.
 // var sequelize = require("../config/connection.js");
 
-// ___ START of UserInfo model   __________________________________________________________________________________________________________________________
+// MODEL
+// =====================================================================================
 module.exports = function(sequelize, DataTypes) {
     // Defining our UserInfo table
     var UserInfo = sequelize.define("UserInfo", {
-        name: {
-            type: DataTypes.STRING
+        first_name: {
+            type: DataTypes.STRING,
+            require: true,
+            validate: {
+                len: [1, 30]
+            }
+        },
+        last_name: {
+            type: DataTypes.STRING,
+            require: true,
+            validate: {
+                len: [1, 30]
+            }
         },
         email: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            unique: true,
+            require: true,
+            validate: {
+                isEmail: true
+            }
         },
         phone: {
-            type: DataTypes.INTEGER
+            type: DataTypes.STRING,
+            require: true,
+            validate: {
+                isNumeric: true,
+                len: [10]
+            }
         },
-        zip: {
-            type: DataTypes.INTEGER
-        }
-    })
+        // username: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     validate: {
+        //         isAlphanumeric: true,
+        //         min: 6
+        //     }
+        // },
+        // password: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     validate: {
+        //         min: 8
+        //     }
+        // },
+        // zip: {
+        //     type: DataTypes.STRING,
+        //     require: true,
+        //     validate: {
+        //         isNumeric: true,
+        //         len: [5]
+        //     }
+        // },
+        salt: DataTypes.STRING,
+        hash: DataTypes.STRING(1500)
+    });
 
     // UserInfo.associate = function (models) {
     //     // Associating UserInfo with Dogs
@@ -39,6 +83,3 @@ module.exports = function(sequelize, DataTypes) {
 
     return UserInfo;
 };
-
-// ___ END of UserInfo Model   _____________________________________________________________________________________________________________________________
-
