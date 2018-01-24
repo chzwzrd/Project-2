@@ -1,6 +1,46 @@
-// // Does this stuff go in routes/diffs 
-// var models = require("../models"); 
-// var router = express.Router();
+
+
+var express = require ("express");
+var models = require("../models"); 
+var router = express.Router();
+
+
+router.get("/", function(req, res) {
+    models.UserInfo.findAll()
+        .then(function(response) {
+            res.render("index", {
+                data: response
+            });
+        })
+        .catch(function(err) {
+            console.log(err)
+            res.send(err);
+        });
+})
+
+router.get("/search", function (req, res) {
+    res.render("search");
+});
+
+router.get("/pets&:animal&:breed&:age&:sex&:zipcode", function (req, res) {
+    res.render("results");
+});
+
+router.get("/rent", function (req, res) {
+    res.render("rent");
+});
+
+router.get("/rented", function (req, res) {
+res.render("rented");
+});
+
+// Export routes for server.js to use //
+
+module.exports = router;
+
+
+
+///___________SAMMY'S BOOK EXAMPLE CODE____________////
 
 // router.get("/", function(req, res) {
 //         models.book.findAll()
@@ -15,8 +55,15 @@
 //                 res.send(err);
 //             });
 //     })
-//     // Export routes for server.js to use.
 // module.exports = router;
+//______________END OF EXAMPLE__________________///////
+
+
+
+
+
+
+
 
 //________________HBS Controller from Sammy and John____________
 
