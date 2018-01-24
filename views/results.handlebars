@@ -29,36 +29,35 @@
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container">
                     {{#each this.pets}}
-                    <h1>{{this.name}}</h1>
-                    {{!--
-                    <div data-pet-card="pet-card" class="pet-card">
-                        <a data-pet-card="pet-card-link" class="pet-card__link" href="#">
-                            <div data-pet-card="petcard-section" class="petcard__section">
-                                <div data-pet-card="pet-card-img-box" class="pet-card-act__img-box">
-                                    <img src="" alt="pet-card" class="pet-card__container" />
-                                    <div data-pet-card="pet-card-act-caption" class="pet-card-act__caption" style="display:none;">Act Quickly</div>
-                                    <!---->
-                                </div>
-                                <div data-pet-card="pet-card-content" class="pet-card__content">
-                                    <h4 data-pet-card="pet-card-heading" class="h4__heading h4-bold h4--x-compact pet-card__heading ellipsis pet-card-act__act-heading">{{this.name}}</h4>
-                                    <div data-pet-card="pet-card-details" class="pet-card-act__details">
-                                        <h5 data-pet-card="h5-heading" class="h5__heading h5-light h5--compact f-letter-caps">
-                                            <span data-pet-card="sex" class="pet-card__content--comma">{{this.sex}}</span>
-                                            <span data-pet-card="age" class="pet-card__content--comma">{{this.age}}</span>
-                                            <!---->
-                                            <!---->
-                                        </h5>
-                                        <h5 data-pet-card="h5-light" class="h5__heading h5--compact h5--light ellipsis">
-                                            <span data-pet-card="city" class="pet-card__content--comma">
-                                                {{this.contact.Contact.city}}, {{this.contact.Contact.state}}
-                                            </span>
-                                        </h5>
-                                        <h5 data-pet-card="breed-name" class="h5__heading h5--compact h5--light ellipsis" style="display:none;">{{this.breeds}}</h5>
+                        <div data-pet-card="pet-card" class="pet-card">
+                            <a data-pet-card="pet-card-link" class="pet-card__link" href="#">
+                                <div data-pet-card="petcard-section" class="petcard__section">
+                                    <div data-pet-card="pet-card-img-box" class="pet-card-act__img-box">
+                                        <img src="" alt="pet-card" class="pet-card__container" />
+                                        <div data-pet-card="pet-card-act-caption" class="pet-card-act__caption" style="display:none;">Act Quickly</div>
+                                        <!---->
+                                    </div>
+                                    <div data-pet-card="pet-card-content" class="pet-card__content">
+                                        <h4 data-pet-card="pet-card-heading" class="h4__heading h4-bold h4--x-compact pet-card__heading ellipsis pet-card-act__act-heading">{{this.name}}</h4>
+                                        <div data-pet-card="pet-card-details" class="pet-card-act__details">
+                                            <h5 data-pet-card="h5-heading" class="h5__heading h5-light h5--compact f-letter-caps">
+                                                <span data-pet-card="sex" class="pet-card__content--comma">{{this.sex}}</span>
+                                                <span data-pet-card="age" class="pet-card__content--comma">{{this.age}}</span>
+                                                <!---->
+                                                <!---->
+                                            </h5>
+                                            <h5 data-pet-card="h5-light" class="h5__heading h5--compact h5--light ellipsis">
+                                                <span data-pet-card="city" class="pet-card__content--comma">
+                                                    {{this.contact.Contact.city}}, {{this.contact.Contact.state}}
+                                                </span>
+                                            </h5>
+                                            <h5 data-pet-card="breed-name" class="h5__heading h5--compact h5--light ellipsis" style="display:none;">{{this.breeds}}</h5>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div> --}} {{/each}}
+                            </a>
+                        </div>
+                    {{/each}}
                 </div>
             </div>
         </div>
