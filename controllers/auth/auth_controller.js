@@ -16,7 +16,7 @@ ctrl.getSalt = () => {
 };
 
 ctrl.getHash = (password, salt) => {
-    return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
+    return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
 };
 
 var generateJWT = (user) => {
@@ -27,7 +27,8 @@ var generateJWT = (user) => {
         first: user.first_name,
         last: user.last_name,
         email: user.email,
-        exp: expire.getTime()/1000
+        phone: user.phone,
+        exp: expire.getTime() / 1000
     }, process.env.JWT_SECRET);
 };
 
@@ -36,28 +37,33 @@ var generateJWT = (user) => {
 ctrl.login = (req, res) => {
     var email = req.body.email;
     var password = req.body.password;
-    models.UserInfo.findOne({ where: {
-        email: email
-    }})
-    .then(response => {
-        // console.log(response);
-        if (response) {
-            // login
-            var inputHash = ctrl.getHash(password, response.salt);
-            if (inputHash === response.hash) {
-                res.json({ token: generateJWT(response /* response is the user from the database */)});
-            } else {
-                return res.status(400).end('Wrong Password');
-            }
-        } else {
-            // err
-            return res.status(404).end('User Not Found');
+    models.UserInfo.findOne({
+        where: {
+            email: email
         }
     })
-    .catch(err => {
-        console.error(err);
-        throw err;
-    });
+        .then(response => {
+            // console.log(response);
+            if (response) {
+                // login
+                var inputHash = ctrl.getHash(password, response.salt /* want to use whatever salt was given to us from the database */);
+                if (inputHash === response.hash) {
+                    console.log("USER FOUND");
+                    res.json({ token: generateJWT(response /* response is the user from the database */) });
+                } else {
+                    console.log("WRONG PASSWORD");
+                    return res.status(400).end('Wrong Password');
+                }
+            } else {
+                // err
+                console.log("USER NOT FOUND");
+                return res.status(404).end('User Not Found');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            throw err;
+        });
 };
 
 ctrl.register = (req, res) => {
@@ -67,7 +73,7 @@ ctrl.register = (req, res) => {
         first_name: req.body.firstName.trim(),
         last_name: req.body.lastName.trim(),
         email: req.body.email.trim().toLowerCase(),
-        phone: req.body.phone.trim()
+        phone: req.body.phone.trim().replace(/[-()]+/g, '')
     };
 
     var salt = ctrl.getSalt();
@@ -75,15 +81,31 @@ ctrl.register = (req, res) => {
     user.salt = salt;
     user.hash = hash;
 
-    models.UserInfo.create(user)
-    .then(response => {
-        // console.log(response);
-        res.json({ success: true }); // don't want to do res.json(response) here because you don't want to include the salt and hash in the response to the user!!
+    models.UserInfo.findOne({
+        where: {
+            email: user.email
+        }
     })
-    .catch(err => {
-        console.error(err);
-        throw err;
-    });
+        .then(response => {
+            // console.log(response);
+            if (response === null) {
+                models.UserInfo.create(user)
+                    .then(response => {
+                        // console.log(response);
+                        console.log("REGISTRATION SUCCESSFUL");
+                        res.json({ success: true }); // don't want to do res.json(response) here because you don't want to include the salt and hash in the response to the user!!
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        throw err;
+                    });
+            } else {
+                console.log("USER ALREADY EXISTS");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });
 };
 
 // EXPORT

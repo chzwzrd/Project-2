@@ -34,12 +34,16 @@ var isEmptyObj = (obj) => {
 
 // MAIN PROCESS
 // =====================================================================================
-$(document).ready(() => {
+$(window).load(() => {
+
+    // autofocus form field on load
+    $("#first-name").focus();
+    $("#email").focus();
 
     $('#register').on('click', (e) => {
         e.preventDefault();
 
-        var userInfo = {
+        var registerInfo = {
             firstName: $("#first-name").val().trim(),
             lastName: $("#last-name").val().trim(),
             email: $("#reg-email").val().trim().toLowerCase(),
@@ -57,67 +61,68 @@ $(document).ready(() => {
 
         // form validation
         // no empty fields
-        if (userInfo.firstName === '' ||
-            userInfo.lastName === '' ||
-            userInfo.email === '' ||
-            userInfo.phone === '' ||
-            userInfo.password === '' ||
-            userInfo.confirm === '') {
+        if (registerInfo.firstName === '' ||
+            registerInfo.lastName === '' ||
+            registerInfo.email === '' ||
+            registerInfo.phone === '' ||
+            registerInfo.password === '' ||
+            registerInfo.confirm === '') {
             alert('Please fill out all fields');
-        } else if (!validateForm(userInfo.firstName, userInfo.lastName, userInfo.email, userInfo.phone, userInfo.password, userInfo.confirm)) {
+        } else if (!validateForm(registerInfo.firstName, registerInfo.lastName, registerInfo.email, registerInfo.phone, registerInfo.password, registerInfo.confirm)) {
             // validate name
-            if (!validateName(userInfo.firstName)) {
+            if (!validateName(registerInfo.firstName)) {
                 firstNameLabel.text('Please enter a valid name:').css('color', 'red');
             } else {
                 firstNameLabel.text('First Name:').css('color', 'rgb(0, 228, 197)');
             }
-            if (!validateName(userInfo.lastName)) {
+            if (!validateName(registerInfo.lastName)) {
                 lastNameLabel.text('Please enter a valid name:').css('color', 'red');
             } else {
                 lastNameLabel.text('Last Name:').css('color', 'rgb(0, 228, 197)');
             }
 
             // validate email
-            if (!validateEmail(userInfo.email)) {
+            if (!validateEmail(registerInfo.email)) {
                 emailLabel.text('Please enter a valid email:').css('color', 'red');
             } else {
                 emailLabel.text('Email:').css('color', 'rgb(0, 228, 197)');
             }
 
             // validate phone number
-            if (!validatePhone(userInfo.phone)) {
+            if (!validatePhone(registerInfo.phone)) {
                 phoneLabel.text('Please enter a valid phone #:').css('color', 'red');
             } else {
                 phoneLabel.text('Phone:').css('color', 'rgb(0, 228, 197)');
             }
 
             // validate password
-            if (userInfo.password.length < 7) {
+            if (registerInfo.password.length < 7) {
                 passwordLabel.text('Must be at least 8 characters:').css('color', 'red');
             } else {
                 passwordLabel.text('Password:').css('color', 'rgb(0, 228, 197)');
 
                 // validate password match
-                if (userInfo.password !== userInfo.confirm) {
+                if (registerInfo.password !== registerInfo.confirm) {
                     confirmLabel.text('Passwords do not match:').css('color', 'red');
                 } else {
                     confirmLabel.text('Confirm Password:').css('color', 'rgb(0, 228, 197)');
                 }
             }
         } else { // if everything is validated
-            console.log('form validation success');
+            $("label").css('color', 'rgb(0, 228, 197)');
+            console.log('registration form validated');
 
-            var userInfo = {
-                firstName: userInfo.firstName,
-                lastName: userInfo.lastName,
-                email: userInfo.email,
-                phone: userInfo.phone.replace(/[-()]+/g, ''),
-                password: userInfo.password
+            var registerInfo = {
+                firstName: registerInfo.firstName,
+                lastName: registerInfo.lastName,
+                email: registerInfo.email,
+                phone: registerInfo.phone.replace(/[-()]+/g, ''),
+                password: registerInfo.password
             };
 
-            axios.post('/auth/register', userInfo)
+            axios.post('/auth/register', registerInfo)
                 .then(response => { // the response is the token!
-                    window.location.href = "/auth/login";
+                    window.location.href = "/login";
                 })
                 .catch(err => {
                     console.error(err);
@@ -127,21 +132,34 @@ $(document).ready(() => {
 
     $('#sign-in').on('click', (e) => {
         e.preventDefault();
-        console.log($("#email").val());
-        console.log("loggin in", $("#password").val())
-        axios.post("/auth/login", {
+        var loginInfo = {
+            email: $("#email").val().trim().toLowerCase(),
+            password: $("#password").val().trim()
+        };
+
+        // form validation
+        if (loginInfo.email === '' ||
+            loginInfo.password === '') {
+            alert('Please fill out all fields');
+        } else if (!validateEmail(loginInfo.email)) {
+            $('label[for="email"]').text('Please enter a valid email:').css('color', 'red');
+        } else {
+            $("label").css('color', 'rgb(0, 228, 197)');
+            console.log('login form validated');
+            console.log('logged in as: ' + loginInfo.email, loginInfo.password);
+            axios.post("/auth/login", {
                 email: $("#email").val(),
                 password: $("#password").val()
             })
-            .then(function(resp) {
-                console.log("logged in");
-                document.cookie = "token=" + resp.data.token;
-                location.assign('/search');
-            })
-            .catch(function(err) {
-                console.error(err);
-            })
-       
+                .then(function(response) {
+                    console.log("logged in");
+                    document.cookie = "token=" + response.data.token;
+                    location.assign('/search');
+                })
+                .catch(function(err) {
+                    console.error(err);
+                });
+        }
     });
 
     $('#sign-out').on('click', (e) => {
@@ -161,7 +179,6 @@ $(document).ready(() => {
             alert('Please fill out all fields');
         } else if (!validateZipCode($('#zip-code').val().trim())) {
             alert('Please enter a valid zip code');
-            console.log('valid zip code: ' + validateZipCode($('#zip-code').val().trim()));
         } else {
 
             // create userSearch object to use in HTTP GET request
@@ -173,18 +190,19 @@ $(document).ready(() => {
                 zipCode: $('#zip-code').val().trim() // must be a string, don't convert it into an integer
             };
 
-            axios.post('/api/results', userSearch)
-                .then(response => {
-                    console.log(response);
-                })
-                .catch(err => {
-                    console.error(err);
-                    throw err;
-                });
+            // to actually post the user's search inputs as an object to a route that contains all of the search inputs that can be accessed as PARAMETERS!!! (go look in hbs-routes.js)
+            axios.post(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`, userSearch)
+            .then(response => {
+                console.log(response);
+                location.assign(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`);
+            })
+            .catch(err => {
+                console.error(err);
+            });
 
+            // purely for browser console insight:
             var petFinderURL = 'http://api.petfinder.com/pet.find?key=19d36f366ea3a2b37ba86aaeb7a5bbea&format=json';
-
-            axios.get(`${petFinderURL}&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`)
+            axios.get(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`)
                 .then(response => {
                     console.log("==================================");
                     console.log("=========== USER SEARCH ==========");
