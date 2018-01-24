@@ -76,7 +76,9 @@ module.exports = router;
 // // Where does this get called? In handlebars? On Submit? Idk
 // // On frontend when submit hit, they are routed to this url
 
-// const petFinderURL = 'http://api.petfinder.com/pet.get?key=19d36f366ea3a2b37ba86aaeb7a5bbea&id=15860233&format=json';
+const petFinderURL = `http://api.petfinder.com/pet.get?key=${process.env.PETFINDER_API_KEY}&format=json`;
+// need to add our API keys into the template literal 
+// John removed the ID from the ID from API url
 
 // router.get("/pets&:age&:breed&:size&:breed&:location&:gender", (req, res) => {
 //     axios.get(petFinderURL + `&animal=dog&age=${req.params.age}

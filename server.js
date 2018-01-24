@@ -1,3 +1,9 @@
+// 1st thing we need to run
+
+require("dotenv").config();
+console.log(process.env.PETFINDER_API_KEY);
+console.log(process.env.PETFINDER_API_SECRET);
+
 // Require dependencies // 
 
 var express = require("express");
@@ -42,15 +48,16 @@ app.set("view engine", "handlebars");
 
 // Sync sequelize models and start Express app //
 
-// models.sequelize.sync({ force: true }).then(function() {
-//     //title and column name have to be the same for bulk insert
-//     models.UserInfo.bulkCreate (
-//       {name: "John", email: "jprickett92@gmail.com", phone: "9496982525", zip: "92663"},
-//       {name: "Aline", email: "xyz@gmail.com", phone: "949555555", zip: "92660"},
-//       {name: "Mel", email: "abc@gmail.com", phone: "9498675309", zip: "90210"},
-//       {name: "Sumaira", email: "sum@gmail.com", phone: "7142222222", zip: "90001"}
-//     )
-app.listen(PORT, function () {
-  console.log("App listening on PORT " + PORT);
-});
-  // });
+models.sequelize.sync({ force: true }).then(function() {
+    //title and column name have to be the same for bulk insert
+    models.UserInfo.bulkCreate (
+      {name: "John", email: "jprickett92@gmail.com", phone: "9496982525", zip: "92663"},
+      {name: "Aline", email: "xyz@gmail.com", phone: "949555555", zip: "92660"},
+      {name: "Mel", email: "abc@gmail.com", phone: "9498675309", zip: "90210"},
+      {name: "Sumaira", email: "sum@gmail.com", phone: "7142222222", zip: "90001"}
+    )
+
+    app.listen(PORT, function () {
+      console.log("App listening on PORT " + PORT);
+    });
+  });

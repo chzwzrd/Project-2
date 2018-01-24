@@ -45,13 +45,14 @@ $(document).ready(() => {
         else {
 
             // create userSearch object to use in HTTP GET request
+            // John added .trim() for UserSearch object values. Deleted Melodie's original UserSearch object
             userSearch = {
-                animal: $('#pet-type').val().toLowerCase(), // must be lowercase (only barnyard, bird, cat, dog, horse, reptile, smallfurry accepted)
-                breed: $('#pet-breed').val(), // must be capitalized with spaces
-                age: $('#pet-age').val(), // must be capitalized (only Baby, Young, Adult, Senior accepted)
-                sex: $('#pet-sex').val(), // must be either 'M' or 'F' (capitalized)
+                animal: $('#pet-type').val().toLowerCase().trim(), // must be lowercase (only barnyard, bird, cat, dog, horse, reptile, smallfurry accepted)
+                breed: $('#pet-breed').val().trim(), // must be capitalized with spaces
+                age: $('#pet-age').val().trim(), // must be capitalized (only Baby, Young, Adult, Senior accepted)
+                sex: $('#pet-sex').val().trim(), // must be either 'M' or 'F' (capitalized)
                 zipCode: $('#zip-code').val().trim() // must be a string, don't convert it into an integer
-            };
+            };    
             // userSearch = {
             //     animal: 'dog',
             //     breed: 'Shiba Inu',
