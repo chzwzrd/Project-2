@@ -29,39 +29,67 @@
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container">
                     {{#each this.pets}}
-                        <div data-pet-card="pet-card" class="pet-card">
-                            <a data-pet-card="pet-card-link" class="pet-card__link" href="#">
-                                <div data-pet-card="petcard-section" class="petcard__section">
-                                    <div data-pet-card="pet-card-img-box" class="pet-card-act__img-box">
-                                        <img src="" alt="pet-card" class="pet-card__container" />
-                                        <div data-pet-card="pet-card-act-caption" class="pet-card-act__caption" style="display:none;">Act Quickly</div>
-                                        <!---->
+                        <a id="pet-link" href="#">
+                            <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                                {{!--
+                                <div class="mdl-card__title mdl-card--expand"> --}}
+                                    <div class="mdl-card--expand crop">
+                                        <img id="pet-photo" src={{#if this.media.photos.1.x}}{{this.media.photos.1.x}}{{else}}
+                                            "http://via.placeholder.com/250x250"{{/if}} />
                                     </div>
-                                    <div data-pet-card="pet-card-content" class="pet-card__content">
-                                        <h4 data-pet-card="pet-card-heading" class="h4__heading h4-bold h4--x-compact pet-card__heading ellipsis pet-card-act__act-heading">{{this.name}}</h4>
-                                        <div data-pet-card="pet-card-details" class="pet-card-act__details">
-                                            <h5 data-pet-card="h5-heading" class="h5__heading h5-light h5--compact f-letter-caps">
-                                                <span data-pet-card="sex" class="pet-card__content--comma">{{this.sex}}</span>
-                                                <span data-pet-card="age" class="pet-card__content--comma">{{this.age}}</span>
-                                                <!---->
-                                                <!---->
-                                            </h5>
-                                            <h5 data-pet-card="h5-light" class="h5__heading h5--compact h5--light ellipsis">
-                                                <span data-pet-card="city" class="pet-card__content--comma">
-                                                    {{this.contact.Contact.city}}, {{this.contact.Contact.state}}
-                                                </span>
-                                            </h5>
-                                            <h5 data-pet-card="breed-name" class="h5__heading h5--compact h5--light ellipsis" style="display:none;">{{this.breeds}}</h5>
-                                        </div>
+                                    {{!-- </div> --}}
+                                <div class="content-div">
+                                    <h2 class="name-div">{{this.name}}</h2>
+                                    <div class="stats-div">
+                                        {{this.contact.city}}, {{this.contact.state}}
+                                        <br /> {{!-- {{this.breeds}}
+                                        <br /> --}} {{#compare this.sex 'M'}}Male{{/compare}}{{#compare this.sex 'F'}}Female{{/compare}}
+                                        &bull; {{this.age}} {{!-- {{#compare this.sex 'M'}}Male{{/compare}}{{#compare this.sex
+                                        'F'}}Female{{/compare}} | {{this.age}} --}}
                                     </div>
                                 </div>
-                            </a>
-                        </div>
+                                {{!--
+                                <div class="mdl-card__actions mdl-card--border"> --}} {{!--
+                                    <div id="rent-btn">
+                                        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">SET PLAYDATE</a>
+                                    </div> --}} {{!-- </div> --}}
+                            </div>
+                        </a>
+
+                        {{!-- modal pop up --}}
+                        <dialog class="mdl-dialog">
+                            <button type="button" class="mdl-button close">X</button>
+                            <h4 class="mdl-dialog__title">{{this.name}}</h4>
+                            <div class="mdl-dialog__content">
+                                <p>{{#if this.description}}{{this.description}}{{else}}No description{{/if}}</p>
+                            </div>
+                            <div class="mdl-dialog__actions">
+                                <button id="rent-btn" type="button" class="mdl-button">SET PLAYDATE</button>
+                            </div>
+                        </dialog>
                     {{/each}}
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        var dialog = document.querySelector('dialog');
+        var showDialogButton = document.querySelector('#pet-link');
+        var background = document.querySelector(".background");
+        if (!dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        showDialogButton.addEventListener('click', function() {
+            dialog.showModal();
+        });
+        dialog.querySelector('.close').addEventListener('click', function() {
+            dialog.close();
+        });
+        background.addEventListener('click', function() {
+            background.close();
+        });
+    </script>
 
 </body>
 
