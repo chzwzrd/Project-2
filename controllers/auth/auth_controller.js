@@ -19,9 +19,9 @@ ctrl.getHash = (password, salt) => {
     return crypto.pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex');
 };
 
-var generateJWT = (user) => {
+ctrl.generateJWT = (user) => {
     var expire = new Date();
-    expire.setDate(expire.getDate() + 7);
+    expire.setDate(expire.getDate() + 1);
     return jwt.sign({
         id: user.id,
         first: user.first_name,
@@ -38,26 +38,30 @@ ctrl.login = (req, res) => {
     var email = req.body.email;
     var password = req.body.password;
     models.UserInfo.findOne({
-        where: {
-            email: email
-        }
-    })
+            where: {
+                email: email
+            }
+        })
         .then(response => {
             // console.log(response);
             if (response) {
                 // login
-                var inputHash = ctrl.getHash(password, response.salt /* want to use whatever salt was given to us from the database */);
+                var inputHash = ctrl.getHash(password, response.salt);
                 if (inputHash === response.hash) {
                     console.log("USER FOUND");
-                    res.json({ token: generateJWT(response /* response is the user from the database */) });
+                    res.json({
+                        token: ctrl.generateJWT(response)
+                    });
                 } else {
                     console.log("WRONG PASSWORD");
                     return res.status(400).end('Wrong Password');
                 }
             } else {
                 // err
+                // throw new Error('User Not Found');
                 console.log("USER NOT FOUND");
                 return res.status(404).end('User Not Found');
+                // can also create helper functions that help you send errors
             }
         })
         .catch(err => {
@@ -68,7 +72,6 @@ ctrl.login = (req, res) => {
 
 ctrl.register = (req, res) => {
     // set up user: expect a first/last name, email, password in the req
-    // TODO: add validation to make sure email doesn't already exist in db, do a confirm password in the frontend as well
     var user = {
         first_name: req.body.firstName.trim(),
         last_name: req.body.lastName.trim(),
@@ -82,10 +85,10 @@ ctrl.register = (req, res) => {
     user.hash = hash;
 
     models.UserInfo.findOne({
-        where: {
-            email: user.email
-        }
-    })
+            where: {
+                email: user.email
+            }
+        })
         .then(response => {
             // console.log(response);
             if (response === null) {
@@ -93,7 +96,9 @@ ctrl.register = (req, res) => {
                     .then(response => {
                         // console.log(response);
                         console.log("REGISTRATION SUCCESSFUL");
-                        res.json({ success: true }); // don't want to do res.json(response) here because you don't want to include the salt and hash in the response to the user!!
+                        res.json({
+                            success: true
+                        }); // don't want to do res.json(response) here because you don't want to include the salt and hash in the response to the user!!
                     })
                     .catch(err => {
                         console.error(err);
@@ -101,6 +106,7 @@ ctrl.register = (req, res) => {
                     });
             } else {
                 console.log("USER ALREADY EXISTS");
+                return res.status(404).end('User Already Exists');
             }
         })
         .catch(err => {

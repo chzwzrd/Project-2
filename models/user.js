@@ -1,7 +1,6 @@
 // MODEL
 // =====================================================================================
 module.exports = function(sequelize, DataTypes) {
-    // Defining our UserInfo table
     var UserInfo = sequelize.define("UserInfo", {
         first_name: {
             type: DataTypes.STRING,

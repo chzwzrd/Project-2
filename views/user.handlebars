@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/user.css">
+</head>
+
+<body>
+
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="demo-header mdl-layout__header mdl-color-text--black">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">
+                    <a href="/search">
+                        <img id="logo" src="/img/puppy-logo.png" />
+                    </a>PetRent</span>
+                <div class="mdl-layout-spacer"></div>
+                
+                <!-- Right aligned menu below button -->
+                <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">menu</i>
+                </button>
+                
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
+                    <li id="search-pg-btn" class="mdl-menu__item">Search</li>
+                    <li id="my-account-btn" class="mdl-menu__item" disabled>My Account</li>
+                    <li id="sign-out-btn" class="mdl-menu__item">Sign Out</li>
+                </ul>
+            </div>
+        </header>
+    </div>
+
+    <div class="container">
+        <div class="mdl-grid">
+            <div id="account-div" class="mdl-cell mdl-cell--12-col">
+                <h4 class="text-center">My Info:</h4>
+                <form id="account-form" action="">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label for="account-first-name">First Name:</label>
+                        <input id="account-first-name" class="form-control" type="text" value="{{this.data.dataValues.first_name}}" />
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label for="account-last-name">Last Name:</label>
+                        <input id="account-last-name" class="form-control" type="text" value="{{this.data.dataValues.last_name}}" />
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label for="account-email">Email:</label>
+                        <input id="account-email" class="form-control" type="email" value="{{this.data.dataValues.email}}" />
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label for="account-phone">Phone:</label>
+                        <input id="account-phone" class="form-control" type="tel" value="{{this.data.dataValues.phone}}" />
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label for="account-new-pw">New Password:</label>
+                        <input id="account-new-pw" class="form-control" type="password" value="" />
+                    </div>
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <label for="account-confm-pw">Confirm Password:</label>
+                        <input id="account-confm-pw" class="form-control" type="password" value="" />
+                    </div>
+                    <button id="update-account-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        UPDATE
+                    </button>
+                    <button id="delete-account-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        DELETE ACCOUNT
+                    </button>
+
+                    {{!-- confirm delete modal --}}
+                    <dialog class="mdl-dialog" id="confirm-delete-modal">
+                        <h4 class="mdl-dialog__title"></h4>
+                        <div id="delete-modal__content" class="mdl-dialog__content">
+                             Are you sure you want to delete your account?
+                        </div>
+                        <div class="mdl-dialog__actions">
+                            <button type="button" class="mdl-button close-modal">NO</button>
+                            <button id="confirm-delete-btn" type="button" class="mdl-button">YES</button>
+                        </div>
+                    </dialog>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        // getting the user's id via the payload from the token stored in localStorage (FRONTEND) so that we can make an HTTP request to access the user and display the info on route /api/user/:id
+        var userInfo = {
+            id: JSON.parse(window.atob(localStorage.getItem('token').split('.')[1])).id,
+            firstName: JSON.parse(window.atob(localStorage.getItem('token').split('.')[1])).first,
+            lastName: JSON.parse(window.atob(localStorage.getItem('token').split('.')[1])).last,
+            email: JSON.parse(window.atob(localStorage.getItem('token').split('.')[1])).email,
+            phone: JSON.parse(window.atob(localStorage.getItem('token').split('.')[1])).phone
+        };
+
+        console.log(userInfo);
+
+        $(document).ready(function() {
+            axios({
+                headers: { "Authorization": "Bearer " + localStorage.getItem("token") },
+                method: "GET",
+                url: "/api/user/" + userInfo.id
+            }).then(function(response) {
+                console.log(response)
+            })
+            .catch(function(err) {
+                console.error(err);
+            });
+
+            // WHEN USER CLICKS ON "DELETE ACCOUNT", TRIGGER MODAL
+            $("#delete-account-btn").on('click', (e) => {
+                e.preventDefault();
+            });
+
+            // WHEN USER CONFIRMS DELETE VIA MODAL
+            $("#confirm-delete-btn").on('click', (e) => {
+                e.preventDefault();
+                
+                axios.delete('/api/user/' + userInfo.id)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+                location.assign('/deleted');
+            });
+
+            // WHEN USER CLICKS ON "UPDATE" TO UPDATE INFO
+            $("#update-account-btn").on('click', (e) => {
+                e.preventDefault();
+
+                var updateInfo = {
+                    firstName: $("#account-first-name").val().trim(),
+                    lastName: $("#account-last-name").val().trim(),
+                    email: $("#account-email").val().trim().toLowerCase(),
+                    phone: $("#account-phone").val().trim().replace(/[-()]+/g, ''),
+                    password: $("#account-new-pw").val().trim(),
+                    confirm: $("#account-confm-pw").val().trim()
+                };
+
+                var accountFirstNameLabel = $('label[for="account-first-name"]');
+                var accountLastNameLabel = $('label[for="account-last-name"]');
+                var accountEmailLabel = $('label[for="account-email"]');
+                var accountPhoneLabel = $('label[for="account-phone"]');
+                var accountPasswordLabel = $('label[for="account-new-pw"]');
+                var accountConfirmLabel = $('label[for="account-confm-pw"]');
+
+                // FORM VALIDATION
+                if (updateInfo.password === "" && updateInfo.confirm === "") {
+                    if(!validateUpdateForm(updateInfo.firstName, updateInfo.lastName, updateInfo.email, updateInfo.phone)) {
+                        // validate name
+                        if (!validateName(updateInfo.firstName)) {
+                            accountFirstNameLabel.text('Please enter a valid name:').css('color', 'red');
+                        } else {
+                            accountFirstNameLabel.text('First Name:').css('color', 'rgb(0, 228, 197)');
+                        }
+                        if (!validateName(updateInfo.lastName)) {
+                            accountLastNameLabel.text('Please enter a valid name:').css('color', 'red');
+                        } else {
+                            accountLastNameLabel.text('Last Name:').css('color', 'rgb(0, 228, 197)');
+                        }
+
+                        // validate email
+                        if (!validateEmail(updateInfo.email)) {
+                            accountEmailLabel.text('Please enter a valid email:').css('color', 'red');
+                        } else {
+                            accountEmailLabel.text('Email:').css('color', 'rgb(0, 228, 197)');
+                        }
+
+                        // validate phone number
+                        if (!validatePhone(updateInfo.phone)) {
+                            accountPhoneLabel.text('Please enter a valid phone #:').css('color', 'red');
+                        } else {
+                            accountPhoneLabel.text('Phone:').css('color', 'rgb(0, 228, 197)');
+                        }
+                    } else { // if everything is validated
+                        $("label").css('color', 'rgb(0, 228, 197)');
+                        accountPasswordLabel.css('color', 'black');
+                        accountConfirmLabel.css('color', 'black');
+                        console.log('udpate form validated');
+
+                        axios.put('/api/user/' + userInfo.id, updateInfo)
+                        .then(response => {
+                            console.log(response);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
+                    }
+                } else if (updateInfo.password === "" && updateInfo.confirm !== "") {
+                    accountPasswordLabel.text('Please provide a new password:').css('color', 'red');
+                } else if (updateInfo.password !== "" && updateInfo.confirm === "") {
+                    accountConfirmLabel.text('Please confirm your new password:').css('color', 'red');
+                } else {
+                    // validate password
+                    if (updateInfo.password.length < 7) {
+                        accountPasswordLabel.text('Must be at least 8 characters:').css('color', 'red');
+                    } else {
+                        accountPasswordLabel.text('Password:').css('color', 'rgb(0, 228, 197)');
+
+                        // validate password match
+                        if (updateInfo.password !== updateInfo.confirm) {
+                            accountPasswordLabel.text('Password:').css('color', 'red');
+                            accountConfirmLabel.text('Passwords do not match:').css('color', 'red');
+                        } else {
+                            accountConfirmLabel.text('Confirm Password:').css('color', 'rgb(0, 228, 197)');
+
+                            console.log('password validated');
+
+                            axios.put('/api/user/pass/' + userInfo.id, updateInfo)
+                            .then(response => {
+                                console.log(response);
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            });
+                        }
+                    }
+                }
+            });
+
+        });
+
+        // MODAL DISPLAY
+        var dialog2 = document.querySelector('#confirm-delete-modal');
+        var showDialogButton = document.querySelector('#delete-account-btn');
+
+        if (!dialog2.showModal) {
+            dialogPolyfill.registerDialog(dialog2);
+        }
+        showDialogButton.addEventListener('click', () => {
+            dialog2.showModal();
+        });
+
+        dialog2.querySelector('.close-modal').addEventListener('click', function() {
+            dialog2.close();
+        });
+    </script>
+</body>
+
+</html>

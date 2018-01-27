@@ -12,22 +12,31 @@
         <header class="demo-header mdl-layout__header mdl-color-text--black">
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title">
-                    <a href="#">
-                        <img id="logo" src="/img/puppy-logo.png" /> {{!-- </a>Hello, {{this.first_name}}</span> --}}
-                </a>PetRent</span>
+                    <a href="/search">
+                        <img id="logo" src="/img/puppy-logo.png" />
+                    {{!-- </a>Hello, {{this.first_name}}</span> --}}
+                    </a>PetRent</span>
                 <div class="mdl-layout-spacer"></div>
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="sign-out">
-                    Sign Out
+
+                <!-- Right aligned menu below button -->
+                <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">menu</i>
                 </button>
+                
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
+                    <li id="search-pg-btn" class="mdl-menu__item" disabled>Search</li>
+                    <li id="my-account-btn" class="mdl-menu__item">My Account</li>
+                    <li id="sign-out-btn" class="mdl-menu__item">Sign Out</li>
+                </ul>
             </div>
         </header>
     </div>
 
     <div class="container">
         <div class="mdl-grid">
-            <div id="form" class="mdl-cell mdl-cell--8-col">
+            <div id="search-div" class="mdl-cell mdl-cell--8-col">
                 <h4 class="text-center">My Furry Friend Should Be...</h4>
-                <form id="new-user-form" action="">
+                <form id="search-form" action="">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <label for="pet-type">Pet:</label>
                         <select id="pet-type" class="form-control">
@@ -81,7 +90,7 @@
                             <option>Anywhere</option>
                         </select>
                     </div>
-                    <button id="search" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button id="search-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         Search
                     </button>
                 </form>

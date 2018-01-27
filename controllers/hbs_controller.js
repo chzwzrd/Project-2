@@ -8,7 +8,6 @@ var ctrl = {};
 // GLOBAL FUNCTIONS
 // =============================================================
 ctrl.petFinderRequest = (req, res) => {
-    
     // don't need CORS extension if using npm package (made for backend)
     petfinder.findPet(req.params.location, {
         animal: req.params.animal,
@@ -17,19 +16,17 @@ ctrl.petFinderRequest = (req, res) => {
         sex: req.params.sex
     }, (err, response) => {
         if (err) console.error(err);
-
         console.log("\n==============================");
         console.log('WOOHOOO API REQUEST SUCCESS');
         console.log(response[0]);
         console.log("==============================\n");
 
         var data = {
-            pets: response
+            pets: response,
         };
 
         res.render('results', data);
     });
-
 };
 
 // EXPORT

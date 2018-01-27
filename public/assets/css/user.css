@@ -1,0 +1,113 @@
+body {
+    background: #3f1097;
+    margin-bottom: 70px;
+}
+
+.mdl-layout__header {
+    background: rgb(3, 244, 212);
+    box-shadow: 0 2px 1px 1px black;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 70px;
+}
+
+.mdl-menu {
+    width: 200px;
+}
+
+.mdl-menu__item {
+    text-align: center;
+}
+
+#sign-out-btn {
+    font-weight: bold;
+}
+
+#account-div {
+    width: 65%;
+    position: relative;
+    /* border: 5px solid rgba(0,0,0,.26); */
+    border-radius: 10px;
+    background: white;
+    box-shadow: 2px 2px 2px 0px grey;
+    margin: 140px auto 0;
+    padding: 10px 40px 90px;
+}
+
+#account-form {
+    width: 100%;
+    margin: 15px auto 15px 5%;
+    font-family: 'Roboto';
+}
+
+input {
+    width: 90% !important;
+}
+
+#delete-account-btn {
+    background: rgba(241, 6, 6, 0.863);
+    /* background: red; */
+    font-weight: bold;
+    position: absolute;
+    right: 185px;
+    bottom: 50px;
+}
+
+#delete-account-btn:hover {
+    background: rgb(226, 0, 0);
+}
+
+#update-account-btn {
+    position: absolute;
+    right: 84px;
+    bottom: 50px;
+    background: rgb(3, 244, 212);
+    font-weight: bold;
+}
+
+#update-account-btn:hover {
+    background: rgb(0, 228, 197);
+}
+
+#confirm-delete-modal {
+    width: 400px;
+    padding-left: 25px;
+}
+
+#delete-modal__content {
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.mdl-button:focus:not(:active) {
+    background: none;
+}
+
+.close-modal {
+    background: white;
+    color: black;
+}
+
+.close-modal:hover {
+    background: rgba(158, 158, 158, .2) !important;
+}
+
+#logo {
+    width: 50px;
+}
+
+.mdl-layout-title {
+    margin-top: 15px;
+    margin-left: -20px;
+}
+
+.mdl-layout-title a:hover {
+    text-decoration: none;
+}
+
+.mdl-layout-title,
+h4 {
+    font-family: 'Sigmar One';
+    margin-bottom: 10px;
+}
