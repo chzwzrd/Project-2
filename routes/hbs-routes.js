@@ -15,23 +15,6 @@ router.get('/search', (req, res) => {
     res.render('search');
 });
 
-router.get("/data/pets&animal=:animal&breed=:breed&age=:age&sex=:sex&location=:location", (req, res) => {
-    petfinder.findPet(req.params.location, {
-        animal: req.params.animal,
-        breed: req.params.breed,
-        age: req.params.age,
-        sex: req.params.sex
-    }, (err, response) => {
-        if (err) console.error(err);
-        console.log("\n==============================");
-        console.log('WOOHOOO API REQUEST SUCCESS');
-        console.log(response[0]);
-        console.log("==============================\n");
-
-        res.json(response);
-    });
-});
-
 router.get("/pets&animal=:animal&breed=:breed&age=:age&sex=:sex&location=:location", hbsCtrl.petFinderRequest);
 
 router.get("/rent", function(req, res) {
