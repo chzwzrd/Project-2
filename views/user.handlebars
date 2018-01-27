@@ -196,7 +196,7 @@
                     accountConfirmLabel.text('Please confirm your new password:').css('color', 'red');
                 } else {
                     // validate password
-                    if (updateInfo.password.length < 7) {
+                    if (updateInfo.password.length < 8) {
                         accountPasswordLabel.text('Must be at least 8 characters:').css('color', 'red');
                     } else {
                         accountPasswordLabel.text('Password:').css('color', 'rgb(0, 228, 197)');
@@ -206,7 +206,8 @@
                             accountPasswordLabel.text('Password:').css('color', 'red');
                             accountConfirmLabel.text('Passwords do not match:').css('color', 'red');
                         } else {
-                            accountConfirmLabel.text('Confirm Password:').css('color', 'rgb(0, 228, 197)');
+                            accountConfirmLabel.text('Confirm Password:');
+                            $('label').css('color', 'rgb(0, 228, 197)')
 
                             console.log('password validated');
 

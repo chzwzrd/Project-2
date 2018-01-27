@@ -1,0 +1,71 @@
+body {
+    background: #3f1097;
+}
+
+.mdl-layout__header {
+    background: rgb(3, 244, 212);
+    box-shadow: 0 2px 1px 1px black;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 70px;
+}
+
+.mdl-menu {
+    width: 200px;
+}
+
+.mdl-menu__item {
+    text-align: center;
+}
+
+#sign-out-btn {
+    font-weight: bold;
+}
+
+#rented-div {
+    position: relative;
+    margin: 160px auto 0;
+    padding: 30px 40px 40px;
+    color: white;
+}
+
+#rented-div img {
+    width: 200px;
+    margin: auto;
+}
+
+#rented-div h4 {
+    font-size: 35px;
+    line-height: 50px;
+}
+
+#rented-div p {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    line-height: 34px;
+    /* font-weight: bold; */
+}
+
+.mdl-button:focus:not(:active) {
+    background: none;
+}
+
+#logo {
+    width: 50px;
+}
+
+.mdl-layout-title {
+    margin-top: 15px;
+    margin-left: -20px;
+}
+
+.mdl-layout-title a:hover {
+    text-decoration: none;
+}
+
+.mdl-layout-title,
+h4 {
+    font-family: 'Sigmar One';
+    margin-bottom: 10px;
+}
