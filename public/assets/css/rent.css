@@ -12,18 +12,86 @@ body {
     height: 70px;
 }
 
-#sign-out {
+.mdl-menu {
+    width: 200px;
+}
+
+.mdl-menu__item {
+    text-align: center;
+}
+
+#sign-out-btn {
     font-weight: bold;
 }
 
-#account-div {
+#pickup-div {
+    width: 65%;
     position: relative;
     /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
     background: white;
     box-shadow: 2px 2px 2px 0px grey;
-    margin: 140px auto 0;
-    padding: 10px 40px 40px;
+    margin: 65px auto 0;
+    padding: 30px 40px 40px;
+}
+
+#rent-photo {
+    width: 300px;
+    border-radius: 20px;
+    margin: 30px auto;
+}
+
+#rent-form {
+    width: 100%;
+    margin: 15px auto 15px 5%;
+    font-family: 'Roboto';
+}
+
+input {
+    width: 90% !important;
+}
+
+#dropoff-input-div {
+    margin: 40px auto;
+    margin-left: -70px;
+}
+
+#set-pickup-btn {
+    /* background: rgb(3, 244, 212); */
+    font-weight: bold;
+}
+
+#set-pickup-btn:hover {
+    background: #d4d4d4;
+    /* background: rgb(0, 228, 197); */
+}
+
+#confirm-pickup-modal {
+    width: 500px;
+    padding-left: 50px;
+    padding-top: 30px;
+}
+
+strong {
+    color: black;
+}
+
+#pickup-modal__content {
+    font-size: 16px;
+    line-height: 40px;
+}
+
+.mdl-button:focus:not(:active) {
+    background: none;
+}
+
+.close-modal {
+    background: white;
+    color: black;
+}
+
+.close-modal:hover {
+    background: rgba(158, 158, 158, .2) !important;
 }
 
 #logo {
@@ -43,9 +111,4 @@ body {
 h4 {
     font-family: 'Sigmar One';
     margin-bottom: 10px;
-}
-
-#results-container {
-    width: 100%;
-    margin: 15px auto 20px 3.5%;
 }
