@@ -20,16 +20,17 @@ ctrl.getHash = (password, salt) => {
 };
 
 ctrl.generateJWT = (user) => {
-    var expire = new Date();
-    expire.setDate(expire.getDate() + 1);
+    // var expire = new Date();
+    // expire.setDate(expire.getDate() + 1);
     return jwt.sign({
         id: user.id,
         first: user.first_name,
         last: user.last_name,
         email: user.email,
         phone: user.phone,
-        exp: expire.getTime() / 1000
-    }, process.env.JWT_SECRET);
+        // exp: expire.getTime() / 1000
+        // exp: Math.floor(Date.now() / 1000) + (60 * 60), // expires in 1 hour
+    }, process.env.JWT_SECRET, { expiresIn: '1h' });
 };
 
 // ROUTES

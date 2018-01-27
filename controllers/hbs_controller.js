@@ -21,9 +21,62 @@ ctrl.petFinderRequest = (req, res) => {
         console.log(response[0]);
         console.log("==============================\n");
 
+        var petsArr = [];
+        for (var m = 0; m < response.length; m++) {
+            var name = response[m].name;
+            var description = response[m].description ? response[m].description : 'N/A';
+            var breeds = response[m].breeds ? response[m].breeds.join(', ') : 'N/A';
+            var media = response[m].media;
+            var contact = response[m].contact;
+            var age = response[m].age;
+            var sex = response[m].sex;
+            if (response[m].options.length > 1) {
+                var options = response[m].options;
+                for (var n = 0; n < options.length; n++) {
+                    if (options[n] === 'altered') {
+                        options[n] = 'Altered';
+                    } else if (options[n] === 'hasShots') {
+                        options[n] = 'Has shots';
+                    } else if (options[n] === 'housetrained') {
+                        options[n] = 'House-trained';
+                    } else if (options[n] === 'specialNeeds') {
+                        options[n] = 'Special needs';
+                    } else if (options[n] === 'noKids') {
+                        options[n] = 'No kids';
+                    } else if (options[n] === 'noCats') {
+                        options[n] = 'No cats';
+                    } else if (options[n] === 'noDogs') {
+                        options[n] = 'No dogs';
+                    }
+                }
+                options = options.join(', ');
+            } else {
+                var options = 'N/A';
+            }
+            if (media.photos['1']) {
+                var photo = media.photos['1'].x;
+            } else {
+                var photo = "http://via.placeholder.com/250x250";
+            }
+            if (contact.city) {
+                var city = contact.city;
+            }
+            if (contact.state) {
+                var state = contact.state;
+            }
+            if (sex === 'M') {
+                sex = 'Male';
+            } else if (sex === 'F') {
+                sex = 'Female';
+            }
+            petsArr.push({ name: name, description: description, breeds: breeds, options: options, photo: photo, city: city, state: state, age: age, sex: sex });
+        }
+
         var data = {
-            pets: response,
+            pets: petsArr
         };
+
+        console.log(petsArr);
 
         res.render('results', data);
     });
