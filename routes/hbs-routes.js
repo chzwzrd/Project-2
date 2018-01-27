@@ -3,18 +3,15 @@
 var express = require("express");
 var router = express.Router();
 var hbsCtrl = require('../controllers/hbs_controller');
+var petfinder = require('pet-finder-api')(process.env.PETFINDER_API_KEY, process.env.PETFINDER_API_SECRET);
 
 // ROUTES + API REQUEST
 // =====================================================================================
-// Handlebars Routes //
-// Handles the HTML page that the user gets sent to //
-router.get("/search", function(req, res) {
-    res.render("search", hbsCtrl.getUser);
+router.get('/search', (req, res) => {
+    res.render('search');
 });
 
-router.get("/results", function(req, res) {
-    res.render("results");
-});
+router.get("/pets&animal=:animal&breed=:breed&age=:age&sex=:sex&location=:location", hbsCtrl.petFinderRequest);
 
 router.get("/rent", function(req, res) {
     res.render("rent");

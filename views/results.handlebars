@@ -4,6 +4,7 @@
 <head>
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/css/results.css">
+    
 </head>
 
 <body>
@@ -25,67 +26,107 @@
 
     <div class="container">
         <div class="mdl-grid">
-            <div id="form" class="mdl-cell mdl-cell--12-col">
+            <div id="results" class="mdl-cell mdl-cell--12-col">
                 <h4 class="text-center">Results:</h4>
-                <div id="results-container"></div>
-            </div>
-
-            {{!-- id = pets[i].id.$t;
-                var name = pets[i].name.$t;
-                var animal = pets[i].animal.$t;
-                var breeds = pets[i].breeds;
-                var breedsArray = [];
-                var age = pets[i].age.$t;
-                var sex = pets[i].sex.$t;
-                var contact = {
-                    email: pets[i].contact.email.$t,
-                    phone: pets[i].contact.phone.$t,
-                    city: pets[i].contact.city.$t,
-                    state: pets[i].contact.state.$t,
-                    zip: pets[i].contact.zip.$t
-                }
-                var location = contact.city + ", " + contact.state;
-                var description = pets[i].description.$t;
-                var media = pets[i].media;
-                var photosArray = [];
-                var options = pets[i].options;
-                var optionsArray = []; --}}
-
-            <div class="results-container">
-                {{#each this.pet}}
-                    <div data-pet-card="pet-card" class="pet-card">
-                        <a data-pet-card="pet-card-link" class="pet-card__link" href="#">
-                            <div data-pet-card="petcard-section" class="petcard__section">
-                                <div data-pet-card="pet-card-img-box" class="pet-card-act__img-box">
-                                    <img src={{this.media.photos.photo[3].$t}} alt="pet-card" class="pet-card__container" />
-                                    <div data-pet-card="pet-card-act-caption" class="pet-card-act__caption" style="display:none;">Act Quickly</div>
-                                    <!---->
+                <div id="results-container">
+                    {{#each this.pets as |pet index|}} 
+                    {{!-- We changed pet-link from an ID to a class --}}
+                    <a class="pet-link" href="#">
+                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                            {{!--
+                            <div class="mdl-card__title mdl-card--expand"> --}}
+                                <div class="mdl-card--expand crop">
+                                    <img id="pet-photo" src={{#if this.media.photos.1.x}}{{this.media.photos.1.x}}{{else}}
+                                        "http://via.placeholder.com/250x250"{{/if}} />
                                 </div>
-                                <div data-pet-card="pet-card-content" class="pet-card__content">
-                                    <h4 data-pet-card="pet-card-heading" class="h4__heading h4-bold h4--x-compact pet-card__heading ellipsis pet-card-act__act-heading">{{this.name.$t}}</h4>
-                                    <div data-pet-card="pet-card-details" class="pet-card-act__details">
-                                        <h5 data-pet-card="h5-heading" class="h5__heading h5-light h5--compact f-letter-caps">
-                                            <span data-pet-card="sex" class="pet-card__content--comma">{{this.sex.$t}}</span>
-                                            <span data-pet-card="age" class="pet-card__content--comma">{{this.age.$t}}</span>
-                                            <!---->
-                                            <!---->
-                                        </h5>
-                                        <h5 data-pet-card="h5-light" class="h5__heading h5--compact h5--light ellipsis">
-                                            <span data-pet-card="city" class="pet-card__content--comma">
-                                                {{this.location}}
-                                            </span>
-                                        </h5>
-                                        <h5 data-pet-card="breed-name" class="h5__heading h5--compact h5--light ellipsis" style="display:none;">{{this.breed}}</h5>
-                                    </div>
+                                {{!-- </div> --}}
+                            <div class="content-div">
+                                <h2 class="name-div" data-key={{index}}>{{this.name}}</h2>
+                                <div class="stats-div">
+                                    {{this.contact.city}}, {{this.contact.state}}
+                                    <br /> {{!-- {{this.breeds}}
+                                    <br /> --}} {{#compare this.sex 'M'}}Male{{/compare}}{{#compare this.sex 'F'}}Female{{/compare}}
+                                    &bull; {{this.age}} {{!-- {{#compare this.sex 'M'}}Male{{/compare}}{{#compare this.sex
+                                    'F'}}Female{{/compare}} | {{this.age}} --}}
                                 </div>
                             </div>
-                        </a>
-                    </div>
-                {{/each}}
+                            {{!--
+                            <div class="mdl-card__actions mdl-card--border"> --}} {{!--
+                                <div id="rent-btn">
+                                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">SET PLAYDATE</a>
+                                </div> --}} {{!-- </div> --}}
+                        </div>
+                    </a>
+
+                    {{modal}}
+
+                    {{/each}}
+                    {{!-- modal pop up --}}
+                    <dialog class="mdl-dialog">
+                        <button type="button" class="mdl-button close">X</button>
+                        <h4 class="mdl-dialog__title">{{this.name}}</h4>
+                        <div class="mdl-dialog__content">
+                            <p>{{#if this.description}}{{this.description}}{{else}}No description{{/if}}</p>
+                        </div>
+                        <div class="mdl-dialog__actions">
+                            <button id="rent-btn" type="button" class="mdl-button">SET PLAYDATE</button>
+                        </div>
+                    </dialog>
+                </div>
             </div>
         </div>
     </div>
+    {{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script> --}}
+    <script>
+        //Handlebars.registerHelper('modal', function(){
+         //   var name = Handlebars.escapeExpression(this.name);
+
+         //   return new Handlebars.SafeString(
+         //       `<dialog class="mdl-dialog">
+         //               <button type="button" class="mdl-button close">X</button>
+         //               <h4 class="mdl-dialog__title">${name}</h4>
+        //               <div class="mdl-dialog__content">
+        //                    <p>{{#if this.description}}{{this.description}}{{else}}No description{{/if}}</p>
+        //                </div>
+         //               <div class="mdl-dialog__actions">
+         //                   <button id="rent-btn" type="button" class="mdl-button">SET PLAYDATE</button>
+         //               </div>
+        //            </dialog>`
+         //   );
+        //})
+
+        var dialog = document.querySelector('dialog');
+        var showDialogButtons = document.getElementsByClassName('pet-link');
+        var background = document.querySelector(".background");
+
+        if (!dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        // for of is ES6 
+        for (button of showDialogButtons) {
+            button.addEventListener('click', function (event) {
+                //let value = event.target.attributes[1].value;
+                //for(let i = 0; i < pets.length; i++){
+                    //if(pets.indexOf(i) === value){
+                       // console.log(pets[i]);
+                    //}
+                dialog.showModal();
+                }
+            });
+        }
+
+        dialog.querySelector('.close').addEventListener('click', function () {
+            dialog.close();
+        });
+        background.addEventListener('click', function () {
+            background.close();
+        });
+
+    </script>
 
 </body>
 
 </html>
+{{!-- have event listener, so each click bring ups a modal, now we need to learn how to identify the information --}}
+
+
