@@ -16,8 +16,9 @@ body {
     font-weight: bold;
 }
 
-#rent-div {
+#account-div {
     position: relative;
+    /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
     background: white;
     box-shadow: 2px 2px 2px 0px grey;

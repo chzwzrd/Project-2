@@ -5,6 +5,7 @@ body {
 
 #form-container {
     position: relative;
+    /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
     background: white;
     box-shadow: 2px 2px 2px 0px grey;
@@ -33,18 +34,19 @@ label {
     margin-right: 15px;
 }
 
-#register {
+#register-btn {
     background: rgb(3, 244, 212);
     position: absolute;
     right: 60px;
     bottom: 40px;
+    font-weight: bold;
 }
 
-#register:hover {
+#register-btn:hover {
     background: rgb(0, 228, 197);
 }
 
-#old-user {
+#have-account-link {
     text-decoration: underline;
     color: rgb(3, 169, 244);
     font-size: 14px;
@@ -53,6 +55,6 @@ label {
     bottom: 45px;
 }
 
-#old-user:hover {
+#have-account-link:hover {
     color: rgb(30, 154, 196)
 }

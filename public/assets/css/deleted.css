@@ -1,5 +1,6 @@
 body {
     background: #3f1097;
+    margin-bottom: 70px;
 }
 
 .mdl-layout__header {
@@ -11,31 +12,28 @@ body {
     height: 70px;
 }
 
-.mdl-menu {
-    width: 200px;
-}
-
-.mdl-menu__item {
-    text-align: center;
-}
-
-#sign-out-btn {
-    font-weight: bold;
-}
-
-#search-div {
+#deleted-div {
+    width: 65%;
     position: relative;
     /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
     background: white;
+    width: 310px;
+    height: 260px;
     box-shadow: 2px 2px 2px 0px grey;
     margin: 140px auto 0;
-    padding: 10px 40px 80px;
+    padding: 20px 40px 90px;
 }
 
-#search-form {
+#create-account-btn {
+    /* background: rgb(3, 244, 212); */
+    font-weight: bold;
     width: 100%;
-    padding: 10px;
+    margin: 15px auto;
+}
+
+#create-account-btn:hover {
+    background: #d4d4d4;
 }
 
 #logo {
@@ -55,24 +53,4 @@ body {
 h4 {
     font-family: 'Sigmar One';
     margin-bottom: 10px;
-}
-
-.mdl-textfield {
-    margin-right: 12px;
-}
-
-label {
-    font-weight: normal;
-}
-
-#search-btn {
-    position: absolute;
-    right: 68px;
-    bottom: 40px;
-    background: rgb(3, 244, 212);
-    font-weight: bold;
-}
-
-#search-btn:hover {
-    background: rgb(0, 228, 197);
 }

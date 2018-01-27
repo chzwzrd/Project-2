@@ -13,41 +13,42 @@
         <header class="demo-header mdl-layout__header mdl-color-text--black">
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title">
-                    <a href="#">
+                    <a href="/search">
                         <img id="logo" src="/img/puppy-logo.png" />
                     </a>PetRent</span>
                 <div class="mdl-layout-spacer"></div>
-                <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="sign-out">
-                    Sign Out
+                
+                <!-- Right aligned menu below button -->
+                <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">menu</i>
                 </button>
+                
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
+                    <li id="search-pg-btn" class="mdl-menu__item">Search</li>
+                    <li id="my-account-btn" class="mdl-menu__item">My Account</li>
+                    <li id="sign-out-btn" class="mdl-menu__item">Sign Out</li>
+                </ul>
             </div>
         </header>
     </div>
 
     <div class="container">
         <div class="mdl-grid">
-            <div id="results" class="mdl-cell mdl-cell--12-col">
+            <div id="results-div" class="mdl-cell mdl-cell--12-col">
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container">
-                    {{#each this.pets as |pet index|}} 
-                    {{!-- We changed pet-link from an ID to a class --}}
-                    <a class="pet-link" href="#">
-                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                            {{!--
-                            <div class="mdl-card__title mdl-card--expand"> --}}
+                    {{#each this.pets}}
+                        <a class="pet-link" data-toggle="modal" href="#petModal" data-name="{{this.name}}" data-description="{{#if this.description}}{{this.description}}{{else}}N/A{{/if}}" data-breeds="{{#if this.breeds}}{{this.breeds}}{{else}}N/A{{/if}}" data-options="{{#if this.options}}{{this.options}}{{else}}N/A{{/if}}">
+                            <div class="demo-card-square mdl-card mdl-shadow--2dp">
                                 <div class="mdl-card--expand crop">
-                                    <img id="pet-photo" src={{#if this.media.photos.1.x}}{{this.media.photos.1.x}}{{else}}
-                                        "http://via.placeholder.com/250x250"{{/if}} />
+                                    <img id="pet-photo" src={{#if this.media.photos.1.x}}{{this.media.photos.1.x}}{{else}}"http://via.placeholder.com/250x250"{{/if}} />
                                 </div>
-                                {{!-- </div> --}}
-                            <div class="content-div">
-                                <h2 class="name-div" data-key={{index}}>{{this.name}}</h2>
-                                <div class="stats-div">
-                                    {{this.contact.city}}, {{this.contact.state}}
-                                    <br /> {{!-- {{this.breeds}}
-                                    <br /> --}} {{#compare this.sex 'M'}}Male{{/compare}}{{#compare this.sex 'F'}}Female{{/compare}}
-                                    &bull; {{this.age}} {{!-- {{#compare this.sex 'M'}}Male{{/compare}}{{#compare this.sex
-                                    'F'}}Female{{/compare}} | {{this.age}} --}}
+                                <div class="content-div">
+                                    <h2 class="name-div">{{this.name}}</h2>
+                                    <div class="stats-div">
+                                        {{this.contact.city}}, {{this.contact.state}}<br />
+                                        {{#compare this.sex 'M'}}Male{{/compare}}{{#compare this.sex 'F'}}Female{{/compare}} &bull; {{this.age}}
+                                    </div>
                                 </div>
                             </div>
                             {{!--
@@ -60,6 +61,27 @@
 
                     {{modal}}
 
+                        <!-- Modal -->
+                        <div class="modal fade" id="petModal" tabindex="-1" role="dialog" aria-labelledby="petModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="mdl-button close" data-dismiss="modal" aria-label="Close">
+                                            {{!--
+                                            <span aria-hidden="true">X</span> --}}
+                                        </button>
+                                        <h4 class="modal-title" id="petModalLabel"></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="rent-btn" type="button" class="mdl-button">Set Playdate</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     {{/each}}
                     {{!-- modal pop up --}}
                     <dialog class="mdl-dialog">
@@ -76,52 +98,65 @@
             </div>
         </div>
     </div>
-    {{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script> --}}
+
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
-        //Handlebars.registerHelper('modal', function(){
-         //   var name = Handlebars.escapeExpression(this.name);
-
-         //   return new Handlebars.SafeString(
-         //       `<dialog class="mdl-dialog">
-         //               <button type="button" class="mdl-button close">X</button>
-         //               <h4 class="mdl-dialog__title">${name}</h4>
-        //               <div class="mdl-dialog__content">
-        //                    <p>{{#if this.description}}{{this.description}}{{else}}No description{{/if}}</p>
-        //                </div>
-         //               <div class="mdl-dialog__actions">
-         //                   <button id="rent-btn" type="button" class="mdl-button">SET PLAYDATE</button>
-         //               </div>
-        //            </dialog>`
-         //   );
-        //})
-
-        var dialog = document.querySelector('dialog');
-        var showDialogButtons = document.getElementsByClassName('pet-link');
-        var background = document.querySelector(".background");
-
-        if (!dialog.showModal) {
-            dialogPolyfill.registerDialog(dialog);
-        }
-        // for of is ES6 
-        for (button of showDialogButtons) {
-            button.addEventListener('click', function (event) {
-                //let value = event.target.attributes[1].value;
-                //for(let i = 0; i < pets.length; i++){
-                    //if(pets.indexOf(i) === value){
-                       // console.log(pets[i]);
-                    //}
-                dialog.showModal();
+        // EXTRACTING DATA FROM PETS OBJECT
+        var pets = {{{toJSON this.pets}}};
+        var petsArr = [];
+        for (var m = 0; m < pets.length; m++) {
+            var name = pets[m].name;
+            var description = pets[m].description ? pets[m].description : 'N/A';
+            var breeds = pets[m].breeds ? pets[m].breeds.join(', ') : 'N/A';
+            if (pets[m].options.length > 1) {
+                var options = pets[m].options;
+                for (var n = 0; n < options.length; n++) {
+                    if (options[n] === 'altered') {
+                        options[n] = 'Altered';
+                    } else if (options[n] === 'hasShots') {
+                        options[n] = 'Has shots';
+                    } else if (options[n] === 'housetrained') {
+                        options[n] = 'House-trained';
+                    } else if (options[n] === 'specialNeeds') {
+                        options[n] = 'Special needs';
+                    } else if (options[n] === 'noKids') {
+                        options[n] = 'No kids';
+                    } else if (options[n] === 'noCats') {
+                        options[n] = 'No cats';
+                    } else if (options[n] === 'noDogs') {
+                        options[n] = 'No dogs';
+                    }
                 }
-            });
+                options = options.join('\n');
+            } else {
+                var options = 'N/A';
+            }
+            petsArr.push({ name: name, description: description, breeds: breeds, options: options });
         }
-
-        dialog.querySelector('.close').addEventListener('click', function () {
-            dialog.close();
+        console.log(pets);
+        console.log(petsArr);
+        // var div = $("<div>");
+        // div.html("{{#each this.pets}}<p>{{this.name}}</p>{{/each}}");
+        // $("#results-container").append(div);
+        
+        // DISPLAY MODAL INFO
+        $("#petModal").on('show.bs.modal', (e) => {
+            var modalTrigger = $(event.relatedTarget); // Button that triggered the modal
+            var petName = modalTrigger.data('name');
+            console.log(petName); // UNDEFINED
+            var petBreeds = modalTrigger.data('breeds');
+            var petDescription = modalTrigger.data('description');
+            var petStatus = modalTrigger.data('options'); // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this); // WINDOW
+            modal.find('.modal-title').text('hello');
+            modal.find('.modal-body input').val(petBreeds);
+            modal.find('.modal-body input').val(petDescription);
+            modal.find('.modal-body input').val(petStatus);
         });
-        background.addEventListener('click', function () {
-            background.close();
-        });
-
+        
     </script>
 
 </body>

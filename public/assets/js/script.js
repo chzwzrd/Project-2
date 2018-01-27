@@ -23,6 +23,10 @@ var validateForm = (first, last, email, phone, pw, confirm) => {
     return validateName(first) && validateName(last) && validateEmail(email) && validatePhone(phone) && (pw.length > 7) && (pw === confirm);
 }
 
+var validateUpdateForm = (first, last, email, phone) => {
+    return validateName(first) && validateName(last) && validateEmail(email) && validatePhone(phone);
+};
+
 var validateZipCode = (zc) => {
     var re = /^\d{5}$/;
     return re.test(Number(zc));
@@ -40,7 +44,8 @@ $(window).load(() => {
     $("#first-name").focus();
     $("#email").focus();
 
-    $('#register').on('click', (e) => {
+    // WHEN USER REGISTERS VIA HOME PAGE
+    $('#register-btn').on('click', (e) => {
         e.preventDefault();
 
         var registerInfo = {
@@ -121,16 +126,20 @@ $(window).load(() => {
             };
 
             axios.post('/auth/register', registerInfo)
-            .then(response => { // the response is the token!
-                window.location.href = "/login";
-            })
-            .catch(err => {
-                console.error(err);
-            });
+                .then(response => { // the response is the token!
+                    window.location.href = "/login";
+                })
+                .catch(err => {
+                    console.error(err.response.data);
+                    if (err.response.data === 'User Already Exists') {
+                        $('label[for="reg-email"]').text('User already exists:').css('color', 'red');
+                    }
+                });
         }
     });
 
-    $('#sign-in').on('click', (e) => {
+    // WHEN USER SIGNS IN VIA LOGIN PAGE
+    $('#sign-in-btn').on('click', (e) => {
         e.preventDefault();
         var loginInfo = {
             email: $("#email").val().trim().toLowerCase(),
@@ -145,30 +154,42 @@ $(window).load(() => {
             $('label[for="email"]').text('Please enter a valid email:').css('color', 'red');
         } else {
             $("label").css('color', 'rgb(0, 228, 197)');
-
             console.log('login form validated');
-
+            // console.log('logged in as: ' + loginInfo.email, loginInfo.password);
             axios.post("/auth/login", {
                 email: $("#email").val(),
                 password: $("#password").val()
             })
-            .then(function(response) {
-                console.log("logged in");
-                document.cookie = "token=" + response.data.token;
-                location.assign('/search');
-            })
-            .catch(function(err) {
-                console.error(err);
-            });
-        }
-    });
-
-    $('#sign-out').on('click', (e) => {
+                .then(function(response) {
+                    console.log('---LOGIN SUCCESS RESPONSE---');
+                    console.log(response.status);
+                    console.log("logged in");
+                    $('label[for="email"]').text('Email:').css('color', 'rgb(0, 228, 197)');
+                    $('label[for="password"]').text('Password:').css('color', 'rgb(0, 228, 197)');
+                    document.cookie = "token=" + response.data.token;
+                    localStorage.setItem("token", response.data.token);
+                    location.assign('/search');
+                })
+                .catch(function(err) {
+                    console.error(typeof err.response.data);
+                    if (err.response.data === 'User Not Found' || err.response.data === 'Wrong Password') {
+                        $('label[for="email"]').text('Invalid email or password:').css('color', 'red');
+                        $('label[for="password"]').text('Invalid email or password:').css('color', 'red');
+                    }
+                });
+            }
+        });
+    
+    // WHEN USER LOGS OUT
+    $('#sign-out-btn').on('click', (e) => {
         e.preventDefault();
-        location.assign('/');
+        document.cookie = "token=";
+        localStorage.removeItem("token");
+        location.assign('/login');
     });
 
-    $('#search').on('click', (e) => {
+    // WHEN USER SUBMITS SEARCH QUERIES VIA SEARCH FORM
+    $('#search-btn').on('click', (e) => {
 
         e.preventDefault();
 
@@ -189,21 +210,46 @@ $(window).load(() => {
                 sex: $('#pet-sex').val(), // must be either 'M' or 'F' (capitalized)
                 zipCode: $('#zip-code').val().trim() // must be a string, don't convert it into an integer
             };
+            
+            // ROUTING TO RESULTS PAGE
             var petFinderURL = 'http://api.petfinder.com/pet.find?key=19d36f366ea3a2b37ba86aaeb7a5bbea&format=json';
-
             axios.get(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`)
-            .then(response => {
-                window.location.href = `/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`;
-            })
-            .catch(err => {
-                console.error(err);
-            });
+                .then(response => {
+
+                    window.location.href=`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`;
+
+                })
+                .catch(err => {
+                    console.error(err);
+                });
         }
     });
 
+    // WHEN USER CLICKS ON "SET PLAYDATE" WITHIN DOG MODAL 
     $("#rent-btn").on('click', (e) => {
         e.preventDefault();
         window.location.href = "/rent";
     });
 
+    // WHEN USER CLICKS ON "MY ACCOUNT" IN DROPDOWN MENU
+    $("#my-account-btn").on('click', (e) => {
+        e.preventDefault();
+        window.location.href = '/user';
+    });
+
+    // WHEN USER CLICKS ON "SEARCH" IN DROPDOWN MENU
+    $("#search-pg-btn").on('click', (e) => {
+        e.preventDefault();
+        window.location.href = '/search';
+    });
+
+    // WHEN USER CLICKS ON "CREATE NEW ACCOUNT" AFTER DELETING ACCOUNT
+    $("#create-account-btn").on('click', (e) => {
+        e.preventDefault();
+        document.cookie = "token=";
+        localStorage.removeItem("token");
+        window.location.href = '/';
+    });
+
 });
+

@@ -12,12 +12,21 @@ body {
     height: 70px;
 }
 
-#sign-out {
+.mdl-menu {
+    width: 200px;
+}
+
+.mdl-menu__item {
+    text-align: center;
+}
+
+#sign-out-btn {
     font-weight: bold;
 }
 
-#results {
+#results-div {
     position: relative;
+    /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
     background: white;
     box-shadow: 2px 2px 2px 0px grey;
@@ -48,8 +57,6 @@ h4 {
     width: 100%;
     margin: 15px auto 20px 3.3%;
 }
-
-
 /* SQUARE CARD */
 
 .demo-card-square.mdl-card {
@@ -60,12 +67,13 @@ h4 {
     height: 370px;
 }
 
-#pet-link {
+.pet-link {
     color: black;
     text-decoration: none;
 }
 
-#pet-link:hover {
+.pet-link:hover {
+    /* color: rgb(3, 244, 212); */
     opacity: 0.8;
 }
 
@@ -89,11 +97,13 @@ h4 {
     font-size: 24px;
     margin-bottom: -5px;
     padding-right: 15px;
+    /* truncate super long names with ellipsis!! */
+    /* https: //stackoverflow.com/questions/1199352/smart-way-to-shorten-long-strings-with-javascript */
     white-space: nowrap;
-    width: 100%;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
+    width: 100%;                   /* IE6 needs any width */
+    overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
+    -o-text-overflow: ellipsis;    /* Opera < 11*/
+    text-overflow:    ellipsis;
 }
 
 .stats-div {
@@ -124,3 +134,9 @@ h4 {
 #rent-btn {
     background: #ececec;
 }
+
+/* 
+.demo-card-square>.mdl-card__title {
+    color: #fff;
+    background: url('') bottom right 15% no-repeat;
+} */

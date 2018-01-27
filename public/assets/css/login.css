@@ -4,6 +4,7 @@ body {
 
 #form-container {
     position: relative;
+    /* border: 5px solid rgba(0,0,0,.26); */
     border-radius: 10px;
     background: white;
     box-shadow: 2px 2px 2px 0px grey;
@@ -28,18 +29,19 @@ label {
     font-weight: normal;
 }
 
-#sign-in {
+#sign-in-btn {
     position: absolute;
     left: 40px;
     bottom: 40px;
     background: rgb(3, 244, 212);
+    font-weight: bold;
 }
 
-#sign-in:hover {
+#sign-in-btn:hover {
     background: rgb(0, 228, 197);
 }
 
-#create {
+#new-user-link {
     position: absolute;
     right: 40px;
     bottom: 40px;
@@ -49,6 +51,6 @@ label {
     font-size: 14px;
 }
 
-#create:hover {
+#new-user-link:hover {
     color: rgb(30, 154, 196)
 }
