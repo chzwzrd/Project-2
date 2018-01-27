@@ -26,13 +26,54 @@
     <div class="container">
         <div class="mdl-grid">
             <div id="account-div" class="mdl-cell mdl-cell--12-col">
-                <h4 class="text-center">My Account:</h4>
+                <h4 class="text-center">I will pick up my new friend at...</h4>
                 <div id="results-container">
-                    
+
+                    {{!-- DISPLAY PET INFO / PHOTO --}}
+
+                    <div class="text-center">
+                        <div class="mdl-card--expand crop text-center">
+                            <img id="pet-photo" src={{#if this.media.photos.1.x}}{{this.media.photos.1.x}}{{else}}
+                                "http://via.placeholder.com/250x250"{{/if}} />
+                        </div>
+
+
+
+                        {{!-- </div> --}} {{!-- FORM FOR DATE,TIME AND LOCATION --}}
+
+                    <div id="form" class="mdl-cell mdl-cell--8-col">
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <p>Please enter pick-up info:</p>
+                            <label for="time">Date:</label>
+                            <input class="mdl-textfield__input text-center" type="date" id="date">
+                        </div>
+
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label for="time">Time:</label>
+                            <input class="mdl-textfield__input text-center" type="time" id="time">
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <label for="location">Location:</label>
+                            <input class="mdl-textfield__input" type="text" id="location"> {{this.contact.city}} {{this.contact.state}}
+                        </div>
+
+                        <div>
+                            <button id="rented-btn" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                Submit
+                            </button>
+                        </div>
+                        </form>
+
+                        {{!-- END OF FORM --}}
+
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 </body>
 
