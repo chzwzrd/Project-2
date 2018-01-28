@@ -37,23 +37,27 @@
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container">
                     {{#each this.pets}}
-                        <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}" data-options="{{this.options}}">
+<<<<<<< Updated upstream
+                        <a class="pet-link" data-toggle="modal" href="/rent" data-name="{{this.name}}" data-description="{{#if this.description}}{{this.description}}{{else}}N/A{{/if}}" data-breeds="{{#if this.breeds}}{{this.breeds}}{{else}}N/A{{/if}}" data-options="{{#if this.options}}{{this.options}}{{else}}N/A{{/if}}">
+=======
+                        <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}" data-options="{{this.options}}" data-photo="{{this.photo}}" data-sex="{{this.sex}}">
+>>>>>>> Stashed changes
                             <div class="demo-card-square mdl-card mdl-shadow--2dp">
                                 <div class="mdl-card--expand crop">
-                                    <img id="pet-photo" src="{{this.photo}}" />
+                                    <img id="pet-photo" src={{#if this.media.photos.1.x}}{{this.media.photos.1.x}}{{else}}"http://via.placeholder.com/250x250"{{/if}} />
                                 </div>
                                 <div class="content-div">
                                     <h2 class="name-div">{{this.name}}</h2>
                                     <div class="stats-div">
-                                        {{this.city}}, {{this.state}}<br />
-                                        {{this.sex}} &bull; {{this.age}}
+                                        {{this.contact.city}}, {{this.contact.state}}<br />
+                                        {{#compare this.sex 'M'}}Male{{/compare}}{{#compare this.sex 'F'}}Female{{/compare}} &bull; {{this.age}}
                                     </div>
                                 </div>
                             </div>
                         </a>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="petModal" tabindex="-1" role="dialog" aria-labelledby="petModalLabel">
+                        <div class="modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="petModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -64,9 +68,7 @@
                                         <h4 class="modal-title" id="petModalLabel"></h4>
                                     </div>
                                     <div class="modal-body">
-                                        <p><strong>Breeds: </strong><span class="pet-breeds"></span></p>
-                                        <p><strong>Description: </strong><span class="pet-description"></span></p>
-                                        <p><strong>Status/Preferences: </strong><span class="pet-options"></span></p>
+                                        ...
                                     </div>
                                     <div class="modal-footer">
                                         <button id="rent-btn" type="button" class="mdl-button">Set Playdate</button>
@@ -85,30 +87,78 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
         // EXTRACTING DATA FROM PETS OBJECT
-        // var pets = {{{toJSON this.pets}}};
-
+        var pets = {{{toJSON this.pets}}};
+        var petsArr = [];
+        for (var m = 0; m < pets.length; m++) {
+            var name = pets[m].name;
+            var description = pets[m].description ? pets[m].description : 'N/A';
+            var breeds = pets[m].breeds ? pets[m].breeds.join(', ') : 'N/A';
+            if (pets[m].options.length > 1) {
+                var options = pets[m].options;
+                for (var n = 0; n < options.length; n++) {
+                    if (options[n] === 'altered') {
+                        options[n] = 'Altered';
+                    } else if (options[n] === 'hasShots') {
+                        options[n] = 'Has shots';
+                    } else if (options[n] === 'housetrained') {
+                        options[n] = 'House-trained';
+                    } else if (options[n] === 'specialNeeds') {
+                        options[n] = 'Special needs';
+                    } else if (options[n] === 'noKids') {
+                        options[n] = 'No kids';
+                    } else if (options[n] === 'noCats') {
+                        options[n] = 'No cats';
+                    } else if (options[n] === 'noDogs') {
+                        options[n] = 'No dogs';
+                    }
+                }
+                options = options.join('\n');
+            } else {
+                var options = 'N/A';
+            }
+            petsArr.push({ name: name, description: description, breeds: breeds, options: options });
+        }
+        console.log(pets);
+        console.log(petsArr);
         // var div = $("<div>");
         // div.html("{{#each this.pets}}<p>{{this.name}}</p>{{/each}}");
         // $("#results-container").append(div);
-        
+
         // DISPLAY MODAL INFO
         $(".pet-link").on('click', function(e)  {
             var modalTrigger = $(this); // Button that triggered the modal
-            console.log(modalTrigger)
+            console.log(modalTrigger);
             var petName = modalTrigger.data('name');
-            console.log(petName); // UNDEFINED
+            console.log(petName);
             var petBreeds = modalTrigger.data('breeds');
             var petDescription = modalTrigger.data('description');
             var petStatus = modalTrigger.data('options'); // Extract info from data-* attributes
-            console.log(petName, petBreeds, petDescription, petStatus)
             // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
             // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $("#petModal"); // WINDOW
+            var modal = $("#petModal");
             modal.find('.modal-title').text(petName);
             $('.pet-breeds').text(petBreeds);
             $('.pet-description').text(petDescription);
             $('.pet-options').text(petStatus);
-            modal.modal()
+            modal.modal();
+
+            $("#rent-btn").on('click', (e) => {
+                e.preventDefault();
+
+                var chosenPet = {
+                    name: modalTrigger.data('name'),
+                    sex: modalTrigger.data('sex'),
+                    photo: modalTrigger.data('photo'),
+                };
+                axios.get(`/rent&name=${chosenPet.name}&sex=${chosenPet.sex}`, chosenPet)
+                .then(response => {
+                    console.log(response);
+                    window.location.href = `/rent&name=${chosenPet.name}&sex=${chosenPet.sex}`;
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+            });
         });
         
     </script>
