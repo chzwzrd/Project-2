@@ -225,12 +225,6 @@ $(window).load(() => {
         }
     });
 
-    // WHEN USER CLICKS ON "SET PLAYDATE" WITHIN DOG MODAL 
-    $("#rent-btn").on('click', (e) => {
-        e.preventDefault();
-        window.location.href = "/rent";
-    });
-
     // WHEN USER CLICKS ON "MY ACCOUNT" IN DROPDOWN MENU
     $("#my-account-btn").on('click', (e) => {
         e.preventDefault();

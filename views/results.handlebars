@@ -37,12 +37,8 @@
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container">
                     {{#each this.pets}}
-<<<<<<< Updated upstream
-                        <a class="pet-link" data-toggle="modal" href="/rent" data-name="{{this.name}}" data-description="{{#if this.description}}{{this.description}}{{else}}N/A{{/if}}" data-breeds="{{#if this.breeds}}{{this.breeds}}{{else}}N/A{{/if}}" data-options="{{#if this.options}}{{this.options}}{{else}}N/A{{/if}}">
-=======
                         <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}" data-options="{{this.options}}" data-photo="{{this.photo}}" data-sex="{{this.sex}}">
->>>>>>> Stashed changes
-                            <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                                <div class="demo-card-square mdl-card mdl-shadow--2dp">
                                 <div class="mdl-card--expand crop">
                                     <img id="pet-photo" src={{#if this.media.photos.1.x}}{{this.media.photos.1.x}}{{else}}"http://via.placeholder.com/250x250"{{/if}} />
                                 </div>
