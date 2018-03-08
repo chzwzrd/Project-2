@@ -37,8 +37,7 @@
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container">
                     {{#each this.pets}}
-                    <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}"
-                        data-options="{{this.options}}">
+                    <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}" data-options="{{this.options}}" data-sex="{{this.sex}}">
                         <div class="demo-card-square mdl-card mdl-shadow--2dp">
                             <div class="mdl-card--expand crop">
                                 <img id="pet-photo" src="{{this.photo}}" />
@@ -94,30 +93,56 @@
     <!-- jQuery CDN -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
-        // EXTRACTING DATA FROM PETS OBJECT
-        // var pets = {{{toJSON this.pets}}};
-        // var div = $("<div>");
-        // div.html("{{#each this.pets}}<p>{{this.name}}</p>{{/each}}");
-        // $("#results-container").append(div);
+        $(window).load(() => {
 
-        // DISPLAY MODAL INFO
-        $(".pet-link").on('click', function(e) {
-            var modalTrigger = $(this); // Button that triggered the modal
-            console.log(modalTrigger)
-            var petName = modalTrigger.data('name');
-            console.log(petName); // UNDEFINED
-            var petBreeds = modalTrigger.data('breeds');
-            var petDescription = modalTrigger.data('description');
-            var petStatus = modalTrigger.data('options'); // Extract info from data-* attributes
-            console.log(petName, petBreeds, petDescription, petStatus)
-            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-            var modal = $("#petModal"); // WINDOW
-            modal.find('.modal-title').text(petName);
-            $('.pet-breeds').text(petBreeds);
-            $('.pet-description').text(petDescription);
-            $('.pet-options').text(petStatus);
-            modal.modal()
+            // $("#loading").hide();
+            // $("body").css("background", "#3f1097");
+            // $("body").css("margin-bottom", "70px");
+            // $(".page-content").show();
+
+            // EXTRACTING DATA FROM PETS OBJECT
+            // var pets = {{{toJSON this.pets}}};
+            // var div = $("<div>");
+            // div.html("{{#each this.pets}}<p>{{this.name}}</p>{{/each}}");
+            // $("#results-container").append(div);
+
+            // DISPLAY MODAL INFO
+            $(".pet-link").on('click', function(e) {
+                var modalTrigger = $(this); // Button that triggered the modal
+                console.log(modalTrigger);
+                var petName = modalTrigger.data('name');
+                console.log(petName);
+                var petBreeds = modalTrigger.data('breeds');
+                var petDescription = modalTrigger.data('description');
+                var petStatus = modalTrigger.data('options'); // Extract info from data-* attributes
+                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                console.log(petName, petBreeds, petDescription, petStatus);
+
+                var modal = $("#petModal");
+                modal.find('.modal-title').text(petName);
+                $('.pet-breeds').text(petBreeds);
+                $('.pet-description').text(petDescription);
+                $('.pet-options').text(petStatus);
+                modal.modal();
+
+                var chosenPet = {
+                    name: modalTrigger.data('name'),
+                    sex: modalTrigger.data('sex'),
+                    photo: modalTrigger.data('photo')
+                };
+
+                $("#rent-btn").on('click', (e) => {
+                    axios.get(`/rent&name=${chosenPet.name}&sex=${chosenPet.sex}`)
+                        .then(response => {
+                            console.log(response);
+                            window.location.href = `/rent&name=${chosenPet.name}&sex=${chosenPet.sex}`;
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
+                });
+            });
         });
 
     </script>

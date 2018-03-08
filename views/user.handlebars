@@ -195,6 +195,47 @@
                 } else if (updateInfo.password !== "" && updateInfo.confirm === "") {
                     accountConfirmLabel.text('Please confirm your new password:').css('color', 'red');
                 } else {
+                    if (!validateUpdateForm(updateInfo.firstName, updateInfo.lastName, updateInfo.email, updateInfo.phone)) {
+                        // validate name
+                        if (!validateName(updateInfo.firstName)) {
+                            accountFirstNameLabel.text('Please enter a valid name:').css('color', 'red');
+                        } else {
+                            accountFirstNameLabel.text('First Name:').css('color', 'rgb(0, 228, 197)');
+                        }
+                        if (!validateName(updateInfo.lastName)) {
+                            accountLastNameLabel.text('Please enter a valid name:').css('color', 'red');
+                        } else {
+                            accountLastNameLabel.text('Last Name:').css('color', 'rgb(0, 228, 197)');
+                        }
+
+                        // validate email
+                        if (!validateEmail(updateInfo.email)) {
+                            accountEmailLabel.text('Please enter a valid email:').css('color', 'red');
+                        } else {
+                            accountEmailLabel.text('Email:').css('color', 'rgb(0, 228, 197)');
+                        }
+
+                        // validate phone number
+                        if (!validatePhone(updateInfo.phone)) {
+                            accountPhoneLabel.text('Please enter a valid phone #:').css('color', 'red');
+                        } else {
+                            accountPhoneLabel.text('Phone:').css('color', 'rgb(0, 228, 197)');
+                        }
+                    } else { // if everything is validated
+                        $("label").css('color', 'rgb(0, 228, 197)');
+                        accountPasswordLabel.css('color', 'black');
+                        accountConfirmLabel.css('color', 'black');
+                        console.log('udpate form validated');
+
+                        axios.put('/api/user/' + userInfo.id, updateInfo)
+                            .then(response => {
+                                console.log(response);
+                            })
+                            .catch(err => {
+                                console.error(err);
+                            });
+                    }
+                    
                     // validate password
                     if (updateInfo.password.length < 8) {
                         accountPasswordLabel.text('Must be at least 8 characters:').css('color', 'red');
