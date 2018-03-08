@@ -34,17 +34,16 @@
     <div class="container">
         <div class="mdl-grid">
             <div id="rent-div" class="mdl-cell mdl-cell--12-col">
-                <h4 class="text-center">I will pick up my new friend at...</h4>
                 <div id="results-container">
                     
                     <div class="container">
                         <div class="mdl-grid">
                             <div id="pickup-div" class="mdl-cell mdl-cell--6-col">
-                                <h4 class="text-center">I will pick up Diesel on:</h4>
+                                <h4 class="text-center">I will pick up <span class="chosen-pet-name">{{this.name}}</span> on:</h4>
 
                                 {{!-- DISPLAY PET INFO / PHOTO --}}
                                 <div class="mdl-card--expand crop text-center">
-                                    <img id="rent-photo" class="img-responsive" src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/37116509/1/?bust=1483569008"
+                                    <img id="chosen-pet-photo" class="img-responsive" src=""
                                     />
                                 </div>
 
@@ -61,7 +60,7 @@
                                     </div>
                                     
                                     <div id="dropoff-input-div" class="text-center">
-                                        <h4 class="text-center">And drop him off at:</h4>
+                                        <h4 class="text-center">And drop <span id="chosen-pet-sex">{{this.sex}}</span> off at:</h4>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <label for="dropoff-time">Dropoff Time:</label>
                                             <input id="dropoff-time" class="form-control text-center" type="time" />
@@ -79,11 +78,11 @@
                                 <dialog class="mdl-dialog" id="confirm-pickup-modal">
                                     <h4 class="mdl-dialog__title">Confirm Info:</h4>
                                     <div id="pickup-modal__content" class="mdl-dialog__content">
-                                        <strong>Pet: </strong>Diesel
-                                        <br/> <strong>Pickup Date: </strong>Saturday, Jan 27, 2017
-                                        <br/> <strong>Pickup Time: </strong>2:00 PM
-                                        <br/> <strong>Pickup Location: </strong> Santa Ana Bulldog Rescue
-                                        <br/> <strong>Dropoff Time: </strong>4:30 PM
+                                        <strong>Pet: </strong><span class="chosen-pet-name">{{this.name}}</span>
+                                        <br/> <strong>Pickup Date: </strong><span id="confm-pickup-date"></span>
+                                        <br/> <strong>Pickup Time: </strong><span id="confm-pickup-time"></span>
+                                        <br/> <strong>Pickup Location: </strong> Santa Ana Pet Rescue
+                                        <br/> <strong>Dropoff Time: </strong><span id="confm-dropoff-time"></span>
                                     </div>
                                     <div class="mdl-dialog__actions">
                                         <button type="button" class="mdl-button close-modal">NO</button>
@@ -125,6 +124,12 @@
                 .catch(function(err) {
                     console.error(err);
                 });
+
+            $("#set-pickup-btn").on('click', (e) => {
+                $("#confm-pickup-date").text($("#pickup-date").val());
+                $("#confm-pickup-time").text($("#pickup-time").val());
+                $("#confm-dropoff-time").text($("#dropoff-time").val());
+            });
 
             $("#confirm-pickup-btn").on('click', (e) => {
                 e.preventDefault();

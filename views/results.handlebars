@@ -16,12 +16,12 @@
                         <img id="logo" src="/img/puppy-logo.png" />
                     </a>PetRent</span>
                 <div class="mdl-layout-spacer"></div>
-                
+
                 <!-- Right aligned menu below button -->
                 <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
                     <i class="material-icons">menu</i>
                 </button>
-                
+
                 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
                     <li id="search-pg-btn" class="mdl-menu__item">Search</li>
                     <li id="my-account-btn" class="mdl-menu__item">My Account</li>
@@ -37,44 +37,54 @@
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container">
                     {{#each this.pets}}
-                        <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}" data-options="{{this.options}}">
-                            <div class="demo-card-square mdl-card mdl-shadow--2dp">
-                                <div class="mdl-card--expand crop">
-                                    <img id="pet-photo" src="{{this.photo}}" />
-                                </div>
-                                <div class="content-div">
-                                    <h2 class="name-div">{{this.name}}</h2>
-                                    <div class="stats-div">
-                                        {{this.city}}, {{this.state}}<br />
-                                        {{this.sex}} &bull; {{this.age}}
-                                    </div>
-                                </div>
+                    <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}"
+                        data-options="{{this.options}}">
+                        <div class="demo-card-square mdl-card mdl-shadow--2dp">
+                            <div class="mdl-card--expand crop">
+                                <img id="pet-photo" src="{{this.photo}}" />
                             </div>
-                        </a>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="petModal" tabindex="-1" role="dialog" aria-labelledby="petModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="mdl-button close" data-dismiss="modal" aria-label="Close">
-                                            {{!--
-                                            <span aria-hidden="true">X</span> --}}
-                                        </button>
-                                        <h4 class="modal-title" id="petModalLabel"></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p><strong>Breeds: </strong><span class="pet-breeds"></span></p>
-                                        <p><strong>Description: </strong><span class="pet-description"></span></p>
-                                        <p><strong>Status/Preferences: </strong><span class="pet-options"></span></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button id="rent-btn" type="button" class="mdl-button">Set Playdate</button>
-                                    </div>
+                            <div class="content-div">
+                                <h2 class="name-div">{{this.name}}</h2>
+                                <div class="stats-div">
+                                    {{this.city}}, {{this.state}}
+                                    <br /> {{this.sex}} &bull; {{this.age}}
                                 </div>
                             </div>
                         </div>
-                        
+                    </a>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="petModal" tabindex="-1" role="dialog" aria-labelledby="petModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="mdl-button close" data-dismiss="modal" aria-label="Close">
+                                        {{!--
+                                        <span aria-hidden="true">X</span> --}}
+                                    </button>
+                                    <h4 class="modal-title" id="petModalLabel"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        <strong>Breeds: </strong>
+                                        <span class="pet-breeds"></span>
+                                    </p>
+                                    <p>
+                                        <strong>Description: </strong>
+                                        <span class="pet-description"></span>
+                                    </p>
+                                    <p>
+                                        <strong>Status/Preferences: </strong>
+                                        <span class="pet-options"></span>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="rent-btn" type="button" class="mdl-button">Set Playdate</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {{/each}}
                 </div>
             </div>
@@ -86,13 +96,12 @@
     <script>
         // EXTRACTING DATA FROM PETS OBJECT
         // var pets = {{{toJSON this.pets}}};
-
         // var div = $("<div>");
         // div.html("{{#each this.pets}}<p>{{this.name}}</p>{{/each}}");
         // $("#results-container").append(div);
-        
+
         // DISPLAY MODAL INFO
-        $(".pet-link").on('click', function(e)  {
+        $(".pet-link").on('click', function(e) {
             var modalTrigger = $(this); // Button that triggered the modal
             console.log(modalTrigger)
             var petName = modalTrigger.data('name');
@@ -110,7 +119,7 @@
             $('.pet-options').text(petStatus);
             modal.modal()
         });
-        
+
     </script>
 
 </body>

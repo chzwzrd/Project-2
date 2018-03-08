@@ -17,8 +17,16 @@ router.get('/search', (req, res) => {
 
 router.get("/pets&animal=:animal&breed=:breed&age=:age&sex=:sex&location=:location", hbsCtrl.petFinderRequest);
 
-router.get("/rent", function(req, res) {
-    res.render("rent");
+router.get("/rent&name=:name&sex=:sex", function(req, res) {
+    var name = req.params.name;
+    var sex = req.params.sex === 'Male' ? 'him' : 'her';
+    var photo = req.params.photo;
+    var chosenPet = {
+        name: name,
+        sex: sex,
+        photo: photo
+    };
+    res.render("rent", chosenPet);
 });
 
 router.get("/rented", function(req, res) {
