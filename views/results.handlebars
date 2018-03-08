@@ -37,8 +37,7 @@
                 <h4 class="text-center">Results:</h4>
                 <div id="results-container">
                     {{#each this.pets}}
-                    <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}"
-                        data-options="{{this.options}}">
+                    <a class="pet-link" href="#petModal" data-name="{{this.name}}" data-description="{{this.description}}" data-breeds="{{this.breeds}}" data-options="{{this.options}}" data-sex="{{this.sex}}">
                         <div class="demo-card-square mdl-card mdl-shadow--2dp">
                             <div class="mdl-card--expand crop">
                                 <img id="pet-photo" src="{{this.photo}}" />
@@ -110,7 +109,7 @@
             // DISPLAY MODAL INFO
             $(".pet-link").on('click', function(e) {
                 var modalTrigger = $(this); // Button that triggered the modal
-                console.log(modalTrigger)
+                console.log(modalTrigger);
                 var petName = modalTrigger.data('name');
                 console.log(petName);
                 var petBreeds = modalTrigger.data('breeds');
