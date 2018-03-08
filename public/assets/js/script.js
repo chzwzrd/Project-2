@@ -40,6 +40,8 @@ var isEmptyObj = (obj) => {
 // =====================================================================================
 $(window).load(() => {
 
+    $('#logo').tooltip();
+
     // autofocus form field on load
     $("#first-name").focus();
     $("#email").focus();
@@ -101,7 +103,7 @@ $(window).load(() => {
             }
 
             // validate password
-            if (registerInfo.password.length < 7) {
+            if (registerInfo.password.length < 8) {
                 passwordLabel.text('Must be at least 8 characters:').css('color', 'red');
             } else {
                 passwordLabel.text('Password:').css('color', 'rgb(0, 228, 197)');
@@ -177,9 +179,9 @@ $(window).load(() => {
                         $('label[for="password"]').text('Invalid email or password:').css('color', 'red');
                     }
                 });
-            }
-        });
-    
+        }
+    });
+
     // WHEN USER LOGS OUT
     $('#sign-out-btn').on('click', (e) => {
         e.preventDefault();
@@ -210,19 +212,25 @@ $(window).load(() => {
                 sex: $('#pet-sex').val(), // must be either 'M' or 'F' (capitalized)
                 zipCode: $('#zip-code').val().trim() // must be a string, don't convert it into an integer
             };
-            
+
             // ROUTING TO RESULTS PAGE
             var petFinderURL = 'http://api.petfinder.com/pet.find?key=19d36f366ea3a2b37ba86aaeb7a5bbea&format=json';
             axios.get(`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`)
                 .then(response => {
 
-                    window.location.href=`/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`;
+                    window.location.href = `/pets&animal=${userSearch.animal}&breed=${userSearch.breed}&age=${userSearch.age}&sex=${userSearch.sex}&location=${userSearch.zipCode}`;
 
                 })
                 .catch(err => {
                     console.error(err);
                 });
         }
+    });
+
+    // WHEN USER CLICKS ON "SET PLAYDATE" IN RESULTS MODAL
+    $("#rent-btn").on('click', (e) => {
+        e.preventDefault();
+        window.location.href = "/rent";
     });
 
     // WHEN USER CLICKS ON "MY ACCOUNT" IN DROPDOWN MENU
@@ -246,4 +254,3 @@ $(window).load(() => {
     });
 
 });
-
